@@ -120,3 +120,12 @@ func ExampleDup() {
 
 	// Output: 6
 }
+
+func ExampleCount() {
+	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
+	fmt.Println(Count(intSlice, func(i int) bool {
+		return intSlice[i] == 7
+	}))
+
+	// Output: 2
+}
