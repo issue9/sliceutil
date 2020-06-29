@@ -24,7 +24,7 @@ func Count(slice interface{}, eq func(i int) bool) (count int) {
 	return
 }
 
-// Dup 检测数组中是否包含重复的值
+// Dup 检测数组或是切片中是否包含重复的值
 //
 // slice 需要检测的数组或是切片，其它类型会 panic；
 // eq 对比数组中两个值是否相等，相等需要返回 true；
