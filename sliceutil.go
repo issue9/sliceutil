@@ -8,12 +8,65 @@ import (
 	"reflect"
 )
 
+// Delete 删除 slice 中符合 eq 条件的元素
+//
+// slice 的类型只能是切片或是切片指针，其它任意类型都将 panic，数组也不行；
+// eq 对比函数，用于确定指定的元素是否可以删除，返回 true 表示可以删除；
+// size 返回新的数组大小，用户可以从原始数组上生成新的数组：
+//  slice[:size]
+func Delete(slice interface{}, eq func(i int) bool) (size int) {
+	v := getSliceValue(slice, true)
+	l := v.Len()
+
+	var cnt int
+	swap := reflect.Swapper(v.Interface())
+	last := l - 1
+	for i := 0; i <= last; i++ {
+		if !eq(i) {
+			continue
+		}
+
+		for j := i; j < last; j++ {
+			swap(j, j+1)
+		}
+		cnt++
+		i--
+		last--
+	}
+
+	return l - cnt
+}
+
+// QuickDelete 删除 slice 中符合 eq 条件的元素
+//
+// 功能与 Delete 相同，但是性能相对 Delete 会好一些，同时也不再保证元素与原数组相同。
+func QuickDelete(slice interface{}, eq func(i int) bool) (size int) {
+	v := getSliceValue(slice, true)
+	l := v.Len()
+
+	var cnt int
+	swap := reflect.Swapper(v.Interface())
+	last := l - 1
+	for i := 0; i <= last; i++ {
+		if !eq(i) {
+			continue
+		}
+
+		swap(i, last)
+		cnt++
+		last--
+		i--
+	}
+
+	return l - cnt
+}
+
 // Count 检测数组中指定值的数量
 //
 // slice 需要检测的数组或是切片，其它类型会 panic；
 // eq 对比函数，i 表示数组的下标，需要在函数将该下标表示的值与你需要的值进行比较是否相等；
 func Count(slice interface{}, eq func(i int) bool) (count int) {
-	v := getSliceValue(slice)
+	v := getSliceValue(slice, false)
 	l := v.Len()
 
 	for i := 0; i < l; i++ {
@@ -30,7 +83,7 @@ func Count(slice interface{}, eq func(i int) bool) (count int) {
 // eq 对比数组中两个值是否相等，相等需要返回 true；
 // 返回值表示存在相等值时，第二个值在数组中的下标值；
 func Dup(slice interface{}, eq func(i, j int) bool) int {
-	v := getSliceValue(slice)
+	v := getSliceValue(slice, false)
 	l := v.Len()
 	for i := 0; i < l; i++ {
 		for j := i + 1; j < l; j++ {
@@ -43,11 +96,16 @@ func Dup(slice interface{}, eq func(i, j int) bool) int {
 	return -1
 }
 
-func getSliceValue(slice interface{}) reflect.Value {
+func getSliceValue(slice interface{}, onlySlice bool) reflect.Value {
 	v := reflect.ValueOf(slice)
 	for v.Kind() == reflect.Ptr {
 		v = v.Elem()
 	}
+
+	if onlySlice && v.Kind() != reflect.Slice {
+		panic(fmt.Sprint("参数 slice 只能是 slice"))
+	}
+
 	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
 		panic(fmt.Sprint("参数 slice 只能是 slice 或是 array"))
 	}
