@@ -11,6 +11,26 @@ sliceutil 提供了针对数组和切片的功能
 - Count 统计数组或切片中包含指定什的数量；
 - Dup 查看数组或切片中是否包含重得的值；
 
+```go
+intSlice := []int{1, 2, 3, 7, 0, 4, 7}
+
+// 返回第二个 7 所在的索引位置
+index := Dup(intSlice, func(i, j int) bool {
+    return intSlice[i] == intSlice[j]
+})
+
+// 返回 7 的数量
+count := Count(intSlice, func(i int) bool {
+    return intSlice[i] == 7
+})
+
+// 会重新调整切片的内容，将删除后的数据在放最前端，并返回数切片的大小。
+// 通过 intSlice[:size] 即为删除后的内容
+size := Delete(intSlice, func(i int) bool {
+    return intSlice[i] == 7
+})
+```
+
 安装
 ----
 
