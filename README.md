@@ -6,7 +6,7 @@ sliceutil
 
 sliceutil 提供了针对数组和切片的功能
 
-- Reverse 返回数组中的元素；
+- Reverse 反转数组中的元素；
 - Delete 删除符合条件的切片元素；
 - QuickDelete 删除符合条件的切片元素，性能稍高于 Delete；
 - Count 统计数组或切片中包含指定什的数量；
