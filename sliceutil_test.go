@@ -24,6 +24,18 @@ var objSlice = []*obj{
 	{ID: 1, Name: "1", Age: 6},
 }
 
+func TestReverse(t *testing.T) {
+	a := assert.New(t)
+
+	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
+	Reverse(intSlice)
+	a.Equal(intSlice, []int{7, 4, 0, 7, 3, 2, 1})
+
+	byteSlice := []byte{1, 2, 3, 7, 0, 4, 7}
+	Reverse(byteSlice)
+	a.Equal(byteSlice, []int{7, 4, 0, 7, 3, 2, 1})
+}
+
 func TestDelete(t *testing.T) {
 	a := assert.New(t)
 

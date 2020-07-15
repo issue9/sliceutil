@@ -8,6 +8,17 @@ import (
 	"reflect"
 )
 
+// Reverse 返回数组中的元素
+func Reverse(slice interface{}) {
+	v := getSliceValue(slice, true)
+	l := v.Len()
+	swap := reflect.Swapper(v.Interface()) // 采用 v.Interface{}，而不是 slice，slice 可能是指针
+
+	for i, j := 0, l-1; i < j; i, j = i+1, j-1 {
+		swap(i, j)
+	}
+}
+
 // Delete 删除 slice 中符合 eq 条件的元素
 //
 // slice 的类型只能是切片或是切片指针，其它任意类型都将 panic，数组也不行；
@@ -19,7 +30,7 @@ func Delete(slice interface{}, eq func(i int) bool) (size int) {
 	l := v.Len()
 
 	var cnt int
-	swap := reflect.Swapper(v.Interface())
+	swap := reflect.Swapper(v.Interface()) // 采用 v.Interface{}，而不是 slice，slice 可能是指针
 	last := l - 1
 	for i := 0; i <= last; i++ {
 		if !eq(i) {
