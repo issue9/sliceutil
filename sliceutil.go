@@ -8,7 +8,7 @@ import (
 	"reflect"
 )
 
-// Reverse 返回数组中的元素
+// Reverse 反转数组中的元素
 func Reverse(slice interface{}) {
 	v := getSliceValue(slice, true)
 	l := v.Len()
