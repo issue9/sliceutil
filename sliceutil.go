@@ -111,9 +111,10 @@ func Dup(slice interface{}, eq func(i, j int) bool) int {
 //
 // container 与 sub 都必须是数组或是切片类型。
 // 如果只是需要判断某一个值是否在 container 中，可以使用 Count() 函数。
-//
-// 数组或是切 片的元素类型未必要相同，只要值是可比较的就行。
-func Contains(container, sub interface{}) bool {
+// eq 用于判断两个数组或是切的某个元素是否相等，其原型为：
+//  func(i, j int) bool
+// i 表示 container 的第 i 个元素，j 表示 sub 的第 j 个元素，两者顺序不能乱。
+func Contains(container, sub interface{}, eq func(i, j int) bool) bool {
 	c := getSliceValue(container, false)
 	s := getSliceValue(sub, false)
 
@@ -125,16 +126,8 @@ func Contains(container, sub interface{}) bool {
 
 LOOP:
 	for i := 0; i < sl; i++ {
-		sv := s.Index(i)
-		st := sv.Type()
-
 		for j := 0; j < cl; j++ {
-			cv := c.Index(j)
-			ct := cv.Type()
-
-			if sv.Interface() == cv.Interface() ||
-				(st.ConvertibleTo(ct) && cv.Interface() == sv.Convert(ct).Interface()) ||
-				(ct.ConvertibleTo(st) && sv.Interface() == cv.Convert(st).Interface()) {
+			if eq(j, i) {
 				continue LOOP
 			}
 		}

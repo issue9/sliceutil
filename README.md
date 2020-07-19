@@ -15,6 +15,7 @@ sliceutil 提供了针对数组和切片的功能
 
 ```go
 intSlice := []int{1, 2, 3, 7, 0, 4, 7}
+intArr := [3]int{1, 7, 0}
 
 // 返回第二个 7 所在的索引位置
 index := Dup(intSlice, func(i, j int) bool {
@@ -30,6 +31,11 @@ count := Count(intSlice, func(i int) bool {
 // 通过 intSlice[:size] 即为删除后的内容
 size := Delete(intSlice, func(i int) bool {
     return intSlice[i] == 7
+})
+
+// ok == true
+ok := Contains(intSlice, intArr, func(i, j int) bool {
+    return int8(intSlice[i]) == int8Arr[j]
 })
 ```
 

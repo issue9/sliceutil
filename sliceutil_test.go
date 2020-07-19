@@ -3,7 +3,6 @@
 package sliceutil
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/issue9/assert"
@@ -283,46 +282,20 @@ func TestContains(t *testing.T) {
 	uints := []uint{1, 5, 2}
 	int8s := []int8{1, 9, 7}
 	floats := []float32{1.0, 9.0}
-	a.True(Contains(ints, uints))
-	a.False(Contains(uints, ints))
-	a.False(Contains(ints, int8s))
-	a.True(Contains(int8s, floats))
+	a.True(Contains(ints, uints, func(i, j int) bool { return uint(ints[i]) == uints[j] }))
+	a.False(Contains(uints, ints, func(i, j int) bool { return int(uints[i]) == ints[j] }))
+	a.False(Contains(ints, int8s, func(i, j int) bool { return int8(ints[i]) == int8s[j] }))
+	a.True(Contains(int8s, floats, func(i, j int) bool { return float32(int8s[i]) == floats[j] }))
 
+	// arr vs slice
 	int8Arr := [3]int8{1, 3, 5}
-	a.True(Contains(ints, int8Arr))
-}
+	a.True(Contains(ints, int8Arr, func(i, j int) bool { return int8(ints[i]) == int8Arr[j] }))
 
-func ExampleDup() {
-	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Dup(intSlice, func(i, j int) bool {
-		return intSlice[i] == intSlice[j]
-	}))
-
-	// Output: 6
-}
-
-func ExampleCount() {
-	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Count(intSlice, func(i int) bool {
-		return intSlice[i] == 7
-	}))
-
-	// Output: 2
-}
-
-func ExampleDelete() {
-	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	size := Delete(intSlice, func(i int) bool {
-		return intSlice[i] == 7
-	})
-	fmt.Println("Delete:", intSlice[:size])
-
-	intSlice = []int{1, 2, 3, 7, 0, 4, 7}
-	size = QuickDelete(intSlice, func(i int) bool {
-		return intSlice[i] == 7
-	})
-	fmt.Println("QuickDelete:", intSlice[:size])
-
-	// Output: Delete: [1 2 3 0 4]
-	// QuickDelete: [1 2 3 4 0]
+	// object
+	objArr := [3]*obj{
+		{ID: 2, Name: "4", Age: 2},
+		{ID: 3, Name: "3", Age: 3},
+		{ID: 5, Name: "5", Age: 5},
+	}
+	a.True(Contains(objSlice, objArr, func(i, j int) bool { return objSlice[i].ID == objArr[j].ID }))
 }
