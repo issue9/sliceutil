@@ -276,6 +276,22 @@ func TestDup(t *testing.T) {
 	})
 }
 
+func TestContains(t *testing.T) {
+	a := assert.New(t)
+
+	ints := []int{1, 2, 3, 4, 5}
+	uints := []uint{1, 5, 2}
+	int8s := []int8{1, 9, 7}
+	floats := []float32{1.0, 9.0}
+	a.True(Contains(ints, uints))
+	a.False(Contains(uints, ints))
+	a.False(Contains(ints, int8s))
+	a.True(Contains(int8s, floats))
+
+	int8Arr := [3]int8{1, 3, 5}
+	a.True(Contains(ints, int8Arr))
+}
+
 func ExampleDup() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
 	fmt.Println(Dup(intSlice, func(i, j int) bool {

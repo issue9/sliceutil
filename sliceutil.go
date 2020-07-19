@@ -107,6 +107,42 @@ func Dup(slice interface{}, eq func(i, j int) bool) int {
 	return -1
 }
 
+// Contains container 是否包含了 sub 中的所有元素
+//
+// container 与 sub 都必须是数组或是切片类型。
+// 如果只是需要判断某一个值是否在 container 中，可以使用 Count() 函数。
+//
+// 数组或是切 片的元素类型未必要相同，只要值是可比较的就行。
+func Contains(container, sub interface{}) bool {
+	c := getSliceValue(container, false)
+	s := getSliceValue(sub, false)
+
+	cl := c.Len()
+	sl := s.Len()
+	if sl > cl {
+		return false
+	}
+
+LOOP:
+	for i := 0; i < sl; i++ {
+		sv := s.Index(i)
+		st := sv.Type()
+
+		for j := 0; j < cl; j++ {
+			cv := c.Index(j)
+			ct := cv.Type()
+
+			if sv.Interface() == cv.Interface() ||
+				(st.ConvertibleTo(ct) && cv.Interface() == sv.Convert(ct).Interface()) ||
+				(ct.ConvertibleTo(st) && sv.Interface() == cv.Convert(st).Interface()) {
+				continue LOOP
+			}
+		}
+		return false
+	}
+	return true
+}
+
 func getSliceValue(slice interface{}, onlySlice bool) reflect.Value {
 	v := reflect.ValueOf(slice)
 	for v.Kind() == reflect.Ptr {
