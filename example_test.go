@@ -10,7 +10,7 @@ func ExampleDup() {
 		return intSlice[i] == intSlice[j]
 	}))
 
-	// Output: 6
+	// Output: [3 6]
 }
 
 func ExampleCount() {

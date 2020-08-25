@@ -1,5 +1,5 @@
 sliceutil
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fissue9%2Fsliceutil%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/issue9/sliceutil/goto?ref=master)
+[![Build Status](https://github.com/issue9/sliceutil/workflows/Go/badge.svg)](https://github.com/issue9/sliceutil/actions?query=workflow%3AGo)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/issue9/sliceutil/branch/master/graph/badge.svg)](https://codecov.io/gh/issue9/sliceutil)
 ======
@@ -17,7 +17,7 @@ sliceutil 提供了针对数组和切片的功能
 intSlice := []int{1, 2, 3, 7, 0, 4, 7}
 intArr := [3]int{1, 7, 0}
 
-// 返回第二个 7 所在的索引位置
+// index == [3, 7]
 index := Dup(intSlice, func(i, j int) bool {
     return intSlice[i] == intSlice[j]
 })
@@ -49,7 +49,7 @@ go get github.com/issue9/sliceutil
 文档
 ----
 
-[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/issue9/sliceutil)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/issue9/sliceutil)](https://pkg.go.dev/github.com/issue9/sliceutil)
 
 版权
 ----

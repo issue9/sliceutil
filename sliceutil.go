@@ -92,19 +92,24 @@ func Count(slice interface{}, eq func(i int) bool) (count int) {
 //
 // slice 需要检测的数组或是切片，其它类型会 panic；
 // eq 对比数组中两个值是否相等，相等需要返回 true；
-// 返回值表示存在相等值时，第二个值在数组中的下标值；
-func Dup(slice interface{}, eq func(i, j int) bool) int {
+// 在存在相同元素时，会返回该相同元素的下标列表，
+// 当有多组相同元素时，仅返回第一组相同元素的下标。
+func Dup(slice interface{}, eq func(i, j int) bool) (indexes []int) {
 	v := getSliceValue(slice, false)
 	l := v.Len()
-	for i := 0; i < l; i++ {
+
+	for i := 0; i < l && len(indexes) == 0; i++ {
 		for j := i + 1; j < l; j++ {
 			if eq(i, j) {
-				return j
+				if len(indexes) == 0 {
+					indexes = append(indexes, i)
+				}
+				indexes = append(indexes, j)
 			}
 		}
 	}
 
-	return -1
+	return indexes
 }
 
 // Contains container 是否包含了 sub 中的所有元素

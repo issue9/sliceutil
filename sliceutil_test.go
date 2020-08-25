@@ -227,44 +227,44 @@ func TestCount(t *testing.T) {
 func TestDup(t *testing.T) {
 	a := assert.New(t)
 
-	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	a.Equal(6, Dup(intSlice, func(i, j int) bool {
+	intSlice := []int{1, 2, 3, 7, 0, 4, 7, 7, 5, 7}
+	a.Equal([]int{3, 6, 7, 9}, Dup(intSlice, func(i, j int) bool {
 		return intSlice[i] == intSlice[j]
 	}))
 
 	// 空数组
 	intSlice = []int{}
-	a.Equal(-1, Dup(intSlice, func(i, j int) bool {
+	a.Nil(Dup(intSlice, func(i, j int) bool {
 		return intSlice[i] == intSlice[j]
 	}))
 
 	// 空数组
 	intSlice = nil
-	a.Equal(-1, Dup(intSlice, func(i, j int) bool {
+	a.Nil(Dup(intSlice, func(i, j int) bool {
 		return intSlice[i] == intSlice[j]
 	}))
 
 	intArray := [7]int{1, 2, 3, 7, 0, 4, 7}
-	a.Equal(6, Dup(intArray, func(i, j int) bool {
+	a.Equal([]int{3, 6}, Dup(intArray, func(i, j int) bool {
 		return intArray[i] == intArray[j]
 	}))
 
-	a.Equal(6, Dup(&intArray, func(i, j int) bool {
+	a.Equal([]int{3, 6}, Dup(&intArray, func(i, j int) bool {
 		return intArray[i] == intArray[j]
 	}))
 
 	stringSlice := []string{"a", "b", "0", "a"}
-	a.Equal(3, Dup(stringSlice, func(i, j int) bool {
+	a.Equal([]int{0, 3}, Dup(stringSlice, func(i, j int) bool {
 		return stringSlice[i] == stringSlice[j]
 	}))
 
-	a.Equal(5, Dup(objSlice, func(i, j int) bool {
+	a.Equal([]int{0, 5}, Dup(objSlice, func(i, j int) bool {
 		return objSlice[i].ID == objSlice[j].ID
 	}))
-	a.Equal(4, Dup(objSlice, func(i, j int) bool {
+	a.Equal([]int{0, 4}, Dup(objSlice, func(i, j int) bool {
 		return objSlice[i].Name == objSlice[j].Name
 	}))
-	a.Equal(-1, Dup(objSlice, func(i, j int) bool {
+	a.Nil(Dup(objSlice, func(i, j int) bool {
 		return objSlice[i].Age == objSlice[j].Age
 	}))
 
