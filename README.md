@@ -2,6 +2,7 @@ sliceutil
 [![Build Status](https://github.com/issue9/sliceutil/workflows/Go/badge.svg)](https://github.com/issue9/sliceutil/actions?query=workflow%3AGo)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/issue9/sliceutil/branch/master/graph/badge.svg)](https://codecov.io/gh/issue9/sliceutil)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/issue9/sliceutil)](https://pkg.go.dev/github.com/issue9/sliceutil)
 ======
 
 sliceutil 提供了针对数组和切片的功能
@@ -45,11 +46,6 @@ ok := Contains(intSlice, intArr, func(i, j int) bool {
 ```shell
 go get github.com/issue9/sliceutil
 ```
-
-文档
-----
-
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/issue9/sliceutil)](https://pkg.go.dev/github.com/issue9/sliceutil)
 
 版权
 ----

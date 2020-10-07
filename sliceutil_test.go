@@ -60,6 +60,30 @@ func TestDelete(t *testing.T) {
 	size = QuickDelete(intInput, eq)
 	a.Equal(intInput[:size], intResult)
 
+	// 未找到元素
+
+	intSlice = []int{1, 2, 3, 7, 7, 0, 4}
+
+	// delete
+	intResult = []int{1, 2, 3, 7, 7, 0, 4}
+	intInput = make([]int, len(intSlice))
+	eq = func(i int) bool {
+		return intInput[i] == -1
+	}
+	copy(intInput, intSlice)
+	size = Delete(intInput, eq)
+	a.Equal(intInput[:size], intResult)
+
+	// quickDelete
+	intResult = []int{1, 2, 3, 7, 7, 0, 4}
+	intInput = make([]int, len(intSlice))
+	eq = func(i int) bool {
+		return intInput[i] == -1
+	}
+	copy(intInput, intSlice)
+	size = QuickDelete(intInput, eq)
+	a.Equal(intInput[:size], intResult)
+
 	// 连续的相同数值
 
 	intSlice = []int{1, 2, 3, 7, 7, 0, 4}
