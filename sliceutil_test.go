@@ -218,6 +218,9 @@ func TestCount(t *testing.T) {
 	a.Equal(2, Count(intSlice, func(i int) bool {
 		return intSlice[i] == 7
 	}))
+	a.Equal(3, Count(intSlice, func(i int) bool {
+		return intSlice[i] == 7 || intSlice[i] == 2
+	}))
 	a.Equal(1, Count(intSlice, func(i int) bool {
 		return intSlice[i] == 0
 	}))

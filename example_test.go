@@ -31,12 +31,12 @@ func ExampleDelete() {
 
 	intSlice = []int{1, 2, 3, 7, 0, 4, 7}
 	size = QuickDelete(intSlice, func(i int) bool {
-		return intSlice[i] == 7
+		return intSlice[i] == 7 || intSlice[i] == 2
 	})
 	fmt.Println("QuickDelete:", intSlice[:size])
 
 	// Output: Delete: [1 2 3 0 4]
-	// QuickDelete: [1 2 3 4 0]
+	// QuickDelete: [1 4 3 0]
 }
 
 func ExampleContains() {
