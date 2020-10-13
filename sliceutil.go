@@ -50,7 +50,7 @@ func Delete(slice interface{}, eq func(i int) bool) (size int) {
 
 // QuickDelete 删除 slice 中符合 eq 条件的元素
 //
-// 功能与 Delete 相同，但是性能相对 Delete 会好一些，同时也不再保证元素与原数组相同。
+// 功能与 Delete 相同，但是性能相对 Delete 会好一些，同时也不再保证元素顺序与原数组相同。
 func QuickDelete(slice interface{}, eq func(i int) bool) (size int) {
 	v := getSliceValue(slice, true)
 	l := v.Len()
@@ -86,6 +86,31 @@ func Count(slice interface{}, eq func(i int) bool) (count int) {
 		}
 	}
 	return
+}
+
+// Unique 提取 slice 中的所有唯一值
+//
+// 返回的 size 用于表示唯一值在 slice 中的最大值元素下标。
+//
+// NOTE: 此操作会改变 slice 元素顺序。
+func Unique(slice interface{}, eq func(i, j int) bool) (size int) {
+	v := getSliceValue(slice, true)
+	l := v.Len()
+
+	var cnt int
+	swap := reflect.Swapper(v.Interface())
+	last := l - 1
+	for i := 0; i <= last; i++ {
+		for j := i + 1; j <= last; j++ {
+			if eq(i, j) {
+				swap(j, last)
+				last--
+				cnt++
+			}
+		}
+	}
+
+	return l - cnt
 }
 
 // Dup 检测数组或是切片中是否包含重复的值

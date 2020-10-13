@@ -211,6 +211,28 @@ func TestDelete(t *testing.T) {
 	a.Equal(objInput[:size], objResult)
 }
 
+func TestUnique(t *testing.T) {
+	a := assert.New(t)
+
+	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
+	size := Unique(intSlice, func(i, j int) bool { return intSlice[i] == intSlice[j] })
+	a.Equal(intSlice[:size], []int{1, 2, 3, 7, 0, 4})
+
+	intSlice = []int{1, 2, 3, 7, 3, 4, 4, 0, 4, 7}
+	size = Unique(intSlice, func(i, j int) bool { return intSlice[i] == intSlice[j] })
+	a.Equal(intSlice[:size], []int{1, 2, 3, 7, 4, 0})
+
+	// 空数组
+	intSlice = []int{}
+	size = Unique(intSlice, func(i, j int) bool { return intSlice[i] == intSlice[j] })
+	a.Equal(size, 0)
+
+	// 空数组
+	intSlice = nil
+	size = Unique(intSlice, func(i, j int) bool { return intSlice[i] == intSlice[j] })
+	a.Equal(size, 0)
+}
+
 func TestCount(t *testing.T) {
 	a := assert.New(t)
 

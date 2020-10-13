@@ -39,6 +39,16 @@ func ExampleDelete() {
 	// QuickDelete: [1 4 3 0]
 }
 
+func ExampleUnique() {
+	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
+	size := Unique(intSlice, func(i, j int) bool {
+		return intSlice[i] == intSlice[j]
+	})
+	fmt.Println(intSlice[:size])
+
+	// Output: [1 2 3 7 0 4]
+}
+
 func ExampleContains() {
 	ints := []int{1, 2, 3, 4, 5}
 	uints := []uint{1, 5, 2}
