@@ -3,10 +3,7 @@
 // Package sliceutil 提供对数组和切片的相关功能
 package sliceutil
 
-import (
-	"fmt"
-	"reflect"
-)
+import "reflect"
 
 // Reverse 反转数组中的元素
 func Reverse(slice interface{}) {
@@ -173,11 +170,11 @@ func getSliceValue(slice interface{}, onlySlice bool) reflect.Value {
 	}
 
 	if onlySlice && v.Kind() != reflect.Slice {
-		panic(fmt.Sprint("参数 slice 只能是 slice"))
+		panic("参数 slice 只能是 slice")
 	}
 
 	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
-		panic(fmt.Sprint("参数 slice 只能是 slice 或是 array"))
+		panic("参数 slice 只能是 slice 或是 array")
 	}
 
 	return v
