@@ -23,6 +23,14 @@ var objSlice = []*obj{
 	{ID: 1, Name: "1", Age: 6},
 }
 
+func TestIndex(t *testing.T) {
+	a := assert.New(t)
+
+	a.Equal(-1, Index(objSlice, func(i int) bool { return objSlice[i].ID == 100 }))
+	a.Equal(1, Index(objSlice, func(i int) bool { return objSlice[i].ID == 2 }))
+	a.Equal(4, Index(objSlice, func(i int) bool { return objSlice[i].ID == 5 }))
+}
+
 func TestReverse(t *testing.T) {
 	a := assert.New(t)
 

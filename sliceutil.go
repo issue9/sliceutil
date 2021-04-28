@@ -5,6 +5,17 @@ package sliceutil
 
 import "reflect"
 
+// Index 从 slice 查找符合 eq 的第一个元素并返回其在数组中的元素
+func Index(slice interface{}, eq func(i int) bool) (index int) {
+	l := getSliceValue(slice, true).Len()
+	for i := 0; i < l; i++ {
+		if eq(i) {
+			return i
+		}
+	}
+	return -1
+}
+
 // Reverse 反转数组中的元素
 func Reverse(slice interface{}) {
 	v := getSliceValue(slice, true)

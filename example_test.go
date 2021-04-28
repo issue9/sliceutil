@@ -4,6 +4,15 @@ package sliceutil
 
 import "fmt"
 
+func ExampleIndex() {
+	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
+	fmt.Println(Index(intSlice, func(i int) bool {
+		return intSlice[i] == 7
+	}))
+
+	// Output: 3
+}
+
 func ExampleDup() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
 	fmt.Println(Dup(intSlice, func(i, j int) bool {
