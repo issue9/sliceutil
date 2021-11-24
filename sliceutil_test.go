@@ -5,7 +5,7 @@ package sliceutil
 import (
 	"testing"
 
-	"github.com/issue9/assert"
+	"github.com/issue9/assert/v2"
 )
 
 type obj struct {
@@ -24,7 +24,7 @@ var objSlice = []*obj{
 }
 
 func TestIndex(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	a.Equal(-1, Index(objSlice, func(i int) bool { return objSlice[i].ID == 100 }))
 	a.Equal(1, Index(objSlice, func(i int) bool { return objSlice[i].ID == 2 }))
@@ -32,7 +32,7 @@ func TestIndex(t *testing.T) {
 }
 
 func TestReverse(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
 	Reverse(intSlice)
@@ -44,7 +44,7 @@ func TestReverse(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
 
@@ -220,7 +220,7 @@ func TestDelete(t *testing.T) {
 }
 
 func TestUnique(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
 	size := Unique(intSlice, func(i, j int) bool { return intSlice[i] == intSlice[j] })
@@ -242,7 +242,7 @@ func TestUnique(t *testing.T) {
 }
 
 func TestCount(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
 	a.Equal(2, Count(intSlice, func(i int) bool {
@@ -282,7 +282,7 @@ func TestCount(t *testing.T) {
 }
 
 func TestDup(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7, 7, 5, 7}
 	a.Equal([]int{3, 6, 7, 9}, Dup(intSlice, func(i, j int) bool {
@@ -333,7 +333,7 @@ func TestDup(t *testing.T) {
 }
 
 func TestContains(t *testing.T) {
-	a := assert.New(t)
+	a := assert.New(t, false)
 
 	ints := []int{1, 2, 3, 4, 5}
 	uints := []uint{1, 5, 2}
