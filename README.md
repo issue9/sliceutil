@@ -32,9 +32,8 @@ count := Count(intSlice, func(i int) bool {
     return intSlice[i] == 7
 })
 
-// 会重新调整切片的内容，将删除后的数据在放最前端，并返回数切片的大小。
-// 通过 intSlice[:size] 即为删除后的内容
-size := Delete(intSlice, func(i int) bool {
+// 会重新调整切片的内容，将删除后的数据在放最前端，并返回新切片。
+slice := Delete(intSlice, func(i int) bool {
     return intSlice[i] == 7
 })
 
