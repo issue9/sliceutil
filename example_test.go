@@ -6,8 +6,8 @@ import "fmt"
 
 func ExampleIndex() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Index(intSlice, func(i int) bool {
-		return intSlice[i] == 7
+	fmt.Println(Index[int](intSlice, func(e int) bool {
+		return e == 7
 	}))
 
 	// Output: 3
@@ -15,8 +15,8 @@ func ExampleIndex() {
 
 func ExampleDup() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Dup(intSlice, func(i, j int) bool {
-		return intSlice[i] == intSlice[j]
+	fmt.Println(Dup[int](intSlice, func(i, j int) bool {
+		return i == j
 	}))
 
 	// Output: [3 6]
@@ -24,8 +24,8 @@ func ExampleDup() {
 
 func ExampleCount() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Count(intSlice, func(i int) bool {
-		return intSlice[i] == 7
+	fmt.Println(Count[int](intSlice, func(e int) bool {
+		return e == 7
 	}))
 
 	// Output: 2
@@ -33,16 +33,16 @@ func ExampleCount() {
 
 func ExampleDelete() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	size := Delete(intSlice, func(i int) bool {
-		return intSlice[i] == 7
+	rslt := Delete[int](intSlice, func(e int) bool {
+		return e == 7
 	})
-	fmt.Println("Delete:", intSlice[:size])
+	fmt.Println("Delete:", rslt)
 
 	intSlice = []int{1, 2, 3, 7, 0, 4, 7}
-	size = QuickDelete(intSlice, func(i int) bool {
-		return intSlice[i] == 7 || intSlice[i] == 2
+	rslt = QuickDelete[int](intSlice, func(e int) bool {
+		return e == 7 || e == 2
 	})
-	fmt.Println("QuickDelete:", intSlice[:size])
+	fmt.Println("QuickDelete:", rslt)
 
 	// Output: Delete: [1 2 3 0 4]
 	// QuickDelete: [1 4 3 0]
@@ -50,19 +50,19 @@ func ExampleDelete() {
 
 func ExampleUnique() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	size := Unique(intSlice, func(i, j int) bool {
-		return intSlice[i] == intSlice[j]
+	rslt := Unique[int](intSlice, func(i, j int) bool {
+		return i == j
 	})
-	fmt.Println(intSlice[:size])
+	fmt.Println(rslt)
 
 	// Output: [1 2 3 7 0 4]
 }
 
 func ExampleContains() {
-	ints := []int{1, 2, 3, 4, 5}
-	uints := []uint{1, 5, 2}
-	fmt.Println(Contains(ints, uints, func(i, j int) bool {
-		return uint(ints[i]) == uints[j]
+	ints1 := []int{1, 2, 3, 4, 5}
+	ints2 := []int{1, 5, 2}
+	fmt.Println(Contains[int](ints1, ints2, func(i, j int) bool {
+		return i == j
 	}))
 
 	// Output: true
