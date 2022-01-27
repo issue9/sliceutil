@@ -3,6 +3,7 @@ sliceutil
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/issue9/sliceutil/branch/master/graph/badge.svg)](https://codecov.io/gh/issue9/sliceutil)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/issue9/sliceutil)](https://pkg.go.dev/github.com/issue9/sliceutil)
+[![Go version](https://img.shields.io/github/go-mod/go-version/issue9/sliceutil)](https://golang.org)
 ======
 
 sliceutil 提供了针对数组和切片的功能
