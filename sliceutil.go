@@ -84,8 +84,6 @@ func Count[T any](slice []T, eq func(e T) bool) (count int) {
 
 // Unique 提取 slice 中的所有唯一值
 //
-// 返回的 size 用于表示唯一值在 slice 中的最大值元素下标。
-//
 // NOTE: 此操作会改变 slice 元素顺序。
 func Unique[T any](slice []T, eq func(i, j T) bool) []T {
 	var cnt int

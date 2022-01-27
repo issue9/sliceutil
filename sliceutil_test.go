@@ -34,7 +34,7 @@ func TestIndex(t *testing.T) {
 func TestReverse(t *testing.T) {
 	a := assert.New(t, false)
 
-	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
+	intSlice := []int{1, 2, 3, 7, 0, 4, 7} // 奇数个数
 	Reverse(intSlice)
 	a.Equal(intSlice, []int{7, 4, 0, 7, 3, 2, 1})
 
