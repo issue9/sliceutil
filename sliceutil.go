@@ -16,12 +16,8 @@ func Index[T any](slice []T, eq func(e T) bool) (index int) {
 // Reverse 反转数组中的元素
 func Reverse[T any](slice []T) {
 	for i, j := 0, len(slice)-1; i < j; i, j = i+1, j-1 {
-		swap[T](slice, i, j)
+		slice[i], slice[j] = slice[j], slice[i]
 	}
-}
-
-func swap[T any](slice []T, i, j int) {
-	slice[i], slice[j] = slice[j], slice[i]
 }
 
 // Delete 删除 slice 中符合 eq 条件的元素
@@ -38,7 +34,7 @@ func Delete[T any](slice []T, eq func(e T) bool) []T {
 		}
 
 		for j := i; j < last; j++ {
-			swap[T](slice, j, j+1)
+			slice[j], slice[j+1] = slice[j+1], slice[j]
 		}
 		cnt++
 		i--
@@ -61,7 +57,7 @@ func QuickDelete[T any](slice []T, eq func(e T) bool) []T {
 			continue
 		}
 
-		swap[T](slice, i, last)
+		slice[i], slice[last] = slice[last], slice[i]
 		cnt++
 		last--
 		i--
@@ -92,7 +88,7 @@ func Unique[T any](slice []T, eq func(i, j T) bool) []T {
 	for i := 0; i <= last; i++ {
 		for j := i + 1; j <= last; j++ {
 			if eq(slice[i], slice[j]) {
-				swap[T](slice, j, last)
+				slice[j], slice[last] = slice[last], slice[j]
 				last--
 				cnt++
 			}
