@@ -4,6 +4,16 @@ package sliceutil
 
 import "fmt"
 
+func ExampleAt() {
+	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
+	v, found := At(intSlice, func(e int) bool {
+		return e == 7
+	})
+	fmt.Println(found, v)
+
+	// Output: true 7
+}
+
 func ExampleIndex() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
 	fmt.Println(Index[int](intSlice, func(e int) bool {

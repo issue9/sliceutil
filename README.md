@@ -8,6 +8,8 @@ sliceutil
 
 sliceutil 提供了针对数组和切片的功能
 
+- At 查找符合条件的元素；
+- Index 查找符合条件元素在数组中的位置；
 - Reverse 反转数组中的元素；
 - Delete 删除符合条件的切片元素；
 - QuickDelete 删除符合条件的切片元素，性能稍高于 Delete；

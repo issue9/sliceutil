@@ -3,6 +3,16 @@
 // Package sliceutil 提供对切片的相关功能
 package sliceutil
 
+// At 从 slice 中查找符合 eq 的元素
+func At[T any](slice []T, eq func(e T) bool) (T, bool) {
+	if index := Index(slice, eq); index > -1 {
+		return slice[index], true
+	}
+
+	var v T
+	return v, false
+}
+
 // Index 从 slice 查找符合 eq 的第一个元素并返回其在数组中的元素
 func Index[T any](slice []T, eq func(e T) bool) (index int) {
 	for i, e := range slice {

@@ -23,11 +23,27 @@ var objSlice = []*obj{
 	{ID: 1, Name: "1", Age: 6},
 }
 
+func TestAt(t *testing.T) {
+	a := assert.New(t, false)
+
+	v, found := At[*obj](objSlice, func(o *obj) bool { return o.ID == 100 })
+	a.False(found).Nil(v)
+
+	v, found = At[*obj](objSlice, func(o *obj) bool { return o.ID == 2 })
+	a.True(found).Equal(objSlice[1], v)
+
+	v, found = At(objSlice, func(o *obj) bool { return o.ID == 5 })
+	a.True(found).Equal(objSlice[4], v)
+
+	v2, found := At([]string{"1", "2"}, func(o string) bool { return o == "-1" })
+	a.False(found).Equal("", v2)
+}
+
 func TestIndex(t *testing.T) {
 	a := assert.New(t, false)
 
 	a.Equal(-1, Index[*obj](objSlice, func(o *obj) bool { return o.ID == 100 }))
-	a.Equal(1, Index[*obj](objSlice, func(o *obj) bool { return o.ID == 2 }))
+	a.Equal(1, Index(objSlice, func(o *obj) bool { return o.ID == 2 }))
 	a.Equal(4, Index[*obj](objSlice, func(o *obj) bool { return o.ID == 5 }))
 }
 
