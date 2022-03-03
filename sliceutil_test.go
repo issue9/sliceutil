@@ -47,6 +47,14 @@ func TestIndex(t *testing.T) {
 	a.Equal(4, Index[*obj](objSlice, func(o *obj) bool { return o.ID == 5 }))
 }
 
+func TestExists(t *testing.T) {
+	a := assert.New(t, false)
+
+	a.False(Exists[*obj](objSlice, func(o *obj) bool { return o.ID == 100 }))
+	a.True(Exists(objSlice, func(o *obj) bool { return o.ID == 2 }))
+	a.True(Exists[*obj](objSlice, func(o *obj) bool { return o.ID == 5 }))
+}
+
 func TestReverse(t *testing.T) {
 	a := assert.New(t, false)
 

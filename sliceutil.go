@@ -23,6 +23,9 @@ func Index[T any](slice []T, eq func(e T) bool) (index int) {
 	return -1
 }
 
+// Exists 判断 slice 中是否存在符合 eq 的元素存在
+func Exists[T any](slice []T, eq func(e T) bool) bool { return Index(slice, eq) > -1 }
+
 // Reverse 反转数组中的元素
 func Reverse[T any](slice []T) {
 	for i, j := 0, len(slice)-1; i < j; i, j = i+1, j-1 {

@@ -23,6 +23,15 @@ func ExampleIndex() {
 	// Output: 3
 }
 
+func ExampleExists() {
+	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
+	fmt.Println(Exists[int](intSlice, func(e int) bool {
+		return e == 7
+	}))
+
+	// Output: true
+}
+
 func ExampleDup() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
 	fmt.Println(Dup[int](intSlice, func(i, j int) bool {
