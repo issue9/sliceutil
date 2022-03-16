@@ -16,7 +16,7 @@ func ExampleAt() {
 
 func ExampleIndex() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Index[int](intSlice, func(e int) bool {
+	fmt.Println(Index(intSlice, func(e int) bool {
 		return e == 7
 	}))
 
@@ -25,7 +25,7 @@ func ExampleIndex() {
 
 func ExampleExists() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Exists[int](intSlice, func(e int) bool {
+	fmt.Println(Exists(intSlice, func(e int) bool {
 		return e == 7
 	}))
 
@@ -34,7 +34,7 @@ func ExampleExists() {
 
 func ExampleDup() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Dup[int](intSlice, func(i, j int) bool {
+	fmt.Println(Dup(intSlice, func(i, j int) bool {
 		return i == j
 	}))
 
@@ -43,7 +43,7 @@ func ExampleDup() {
 
 func ExampleCount() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Count[int](intSlice, func(e int) bool {
+	fmt.Println(Count(intSlice, func(e int) bool {
 		return e == 7
 	}))
 
@@ -52,13 +52,13 @@ func ExampleCount() {
 
 func ExampleDelete() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	rslt := Delete[int](intSlice, func(e int) bool {
+	rslt := Delete(intSlice, func(e int) bool {
 		return e == 7
 	})
 	fmt.Println("Delete:", rslt)
 
 	intSlice = []int{1, 2, 3, 7, 0, 4, 7}
-	rslt = QuickDelete[int](intSlice, func(e int) bool {
+	rslt = QuickDelete(intSlice, func(e int) bool {
 		return e == 7 || e == 2
 	})
 	fmt.Println("QuickDelete:", rslt)
@@ -69,7 +69,7 @@ func ExampleDelete() {
 
 func ExampleUnique() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	rslt := Unique[int](intSlice, func(i, j int) bool {
+	rslt := Unique(intSlice, func(i, j int) bool {
 		return i == j
 	})
 	fmt.Println(rslt)
@@ -80,7 +80,7 @@ func ExampleUnique() {
 func ExampleContains() {
 	ints1 := []int{1, 2, 3, 4, 5}
 	ints2 := []int{1, 5, 2}
-	fmt.Println(Contains[int](ints1, ints2, func(i, j int) bool {
+	fmt.Println(Contains(ints1, ints2, func(i, j int) bool {
 		return i == j
 	}))
 

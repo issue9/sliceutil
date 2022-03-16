@@ -26,10 +26,10 @@ var objSlice = []*obj{
 func TestAt(t *testing.T) {
 	a := assert.New(t, false)
 
-	v, found := At[*obj](objSlice, func(o *obj) bool { return o.ID == 100 })
+	v, found := At(objSlice, func(o *obj) bool { return o.ID == 100 })
 	a.False(found).Nil(v)
 
-	v, found = At[*obj](objSlice, func(o *obj) bool { return o.ID == 2 })
+	v, found = At(objSlice, func(o *obj) bool { return o.ID == 2 })
 	a.True(found).Equal(objSlice[1], v)
 
 	v, found = At(objSlice, func(o *obj) bool { return o.ID == 5 })
@@ -42,17 +42,17 @@ func TestAt(t *testing.T) {
 func TestIndex(t *testing.T) {
 	a := assert.New(t, false)
 
-	a.Equal(-1, Index[*obj](objSlice, func(o *obj) bool { return o.ID == 100 }))
+	a.Equal(-1, Index(objSlice, func(o *obj) bool { return o.ID == 100 }))
 	a.Equal(1, Index(objSlice, func(o *obj) bool { return o.ID == 2 }))
-	a.Equal(4, Index[*obj](objSlice, func(o *obj) bool { return o.ID == 5 }))
+	a.Equal(4, Index(objSlice, func(o *obj) bool { return o.ID == 5 }))
 }
 
 func TestExists(t *testing.T) {
 	a := assert.New(t, false)
 
-	a.False(Exists[*obj](objSlice, func(o *obj) bool { return o.ID == 100 }))
+	a.False(Exists(objSlice, func(o *obj) bool { return o.ID == 100 }))
 	a.True(Exists(objSlice, func(o *obj) bool { return o.ID == 2 }))
-	a.True(Exists[*obj](objSlice, func(o *obj) bool { return o.ID == 5 }))
+	a.True(Exists(objSlice, func(o *obj) bool { return o.ID == 5 }))
 }
 
 func TestReverse(t *testing.T) {
@@ -79,7 +79,7 @@ func TestDelete(t *testing.T) {
 		return e == 7
 	}
 	copy(intInput, intSlice)
-	rslt := Delete[int](intInput, eq)
+	rslt := Delete(intInput, eq)
 	a.Equal(rslt, intResult)
 
 	// quickDelete
@@ -89,7 +89,7 @@ func TestDelete(t *testing.T) {
 		return e == 7
 	}
 	copy(intInput, intSlice)
-	rslt = QuickDelete[int](intInput, eq)
+	rslt = QuickDelete(intInput, eq)
 	a.Equal(rslt, intResult)
 
 	// 未找到元素
@@ -103,7 +103,7 @@ func TestDelete(t *testing.T) {
 		return e == -1
 	}
 	copy(intInput, intSlice)
-	rslt = Delete[int](intInput, eq)
+	rslt = Delete(intInput, eq)
 	a.Equal(rslt, intResult)
 
 	// quickDelete
@@ -113,7 +113,7 @@ func TestDelete(t *testing.T) {
 		return e == -1
 	}
 	copy(intInput, intSlice)
-	rslt = QuickDelete[int](intInput, eq)
+	rslt = QuickDelete(intInput, eq)
 	a.Equal(rslt, intResult)
 
 	// 连续的相同数值
@@ -127,7 +127,7 @@ func TestDelete(t *testing.T) {
 		return e == 7
 	}
 	copy(intInput, intSlice)
-	rslt = Delete[int](intInput, eq)
+	rslt = Delete(intInput, eq)
 	a.Equal(rslt, intResult)
 
 	// quickDelete
@@ -137,7 +137,7 @@ func TestDelete(t *testing.T) {
 		return e == 7
 	}
 	copy(intInput, intSlice)
-	rslt = QuickDelete[int](intInput, eq)
+	rslt = QuickDelete(intInput, eq)
 	a.Equal(rslt, intResult)
 
 	// 删除后为空数组
@@ -152,14 +152,14 @@ func TestDelete(t *testing.T) {
 	eq = func(e int) bool {
 		return e == 7
 	}
-	rslt = Delete[int](intSlice, eq)
+	rslt = Delete(intSlice, eq)
 	a.Equal(len(rslt), 0)
 
 	// quickDelete
 	eq = func(e int) bool {
 		return e == 7
 	}
-	rslt = QuickDelete[int](intSlice, eq)
+	rslt = QuickDelete(intSlice, eq)
 	a.Equal(len(rslt), 0)
 
 	// nil
@@ -170,14 +170,14 @@ func TestDelete(t *testing.T) {
 	eq = func(e int) bool {
 		return e == 7
 	}
-	rslt = Delete[int](intSlice, eq)
+	rslt = Delete(intSlice, eq)
 	a.Equal(len(rslt), 0)
 
 	// quickDelete
 	eq = func(e int) bool {
 		return e == 7
 	}
-	rslt = QuickDelete[int](intSlice, eq)
+	rslt = QuickDelete(intSlice, eq)
 	a.Equal(len(rslt), 0)
 
 	// object slice
@@ -195,7 +195,7 @@ func TestDelete(t *testing.T) {
 		return e.ID == 2
 	}
 	copy(objInput, objSlice)
-	rslt2 := Delete[*obj](objInput, eq1)
+	rslt2 := Delete(objInput, eq1)
 	a.Equal(rslt2, objResult)
 
 	// quickDelete
@@ -211,7 +211,7 @@ func TestDelete(t *testing.T) {
 		return e.ID == 2
 	}
 	copy(objInput, objSlice)
-	rslt2 = QuickDelete[*obj](objInput, eq1)
+	rslt2 = QuickDelete(objInput, eq1)
 	a.Equal(rslt2, objResult)
 }
 
@@ -219,21 +219,21 @@ func TestUnique(t *testing.T) {
 	a := assert.New(t, false)
 
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	rslt := Unique[int](intSlice, func(i, j int) bool { return i == j })
+	rslt := Unique(intSlice, func(i, j int) bool { return i == j })
 	a.Equal(rslt, []int{1, 2, 3, 7, 0, 4})
 
 	intSlice = []int{1, 2, 3, 7, 3, 4, 4, 0, 4, 7}
-	rslt = Unique[int](intSlice, func(i, j int) bool { return i == j })
+	rslt = Unique(intSlice, func(i, j int) bool { return i == j })
 	a.Equal(rslt, []int{1, 2, 3, 7, 4, 0})
 
 	// 空数组
 	intSlice = []int{}
-	rslt = Unique[int](intSlice, func(i, j int) bool { return i == j })
+	rslt = Unique(intSlice, func(i, j int) bool { return i == j })
 	a.Empty(rslt)
 
 	// 空数组
 	intSlice = nil
-	rslt = Unique[int](intSlice, func(i, j int) bool { return i == j })
+	rslt = Unique(intSlice, func(i, j int) bool { return i == j })
 	a.Empty(rslt)
 }
 
@@ -241,34 +241,34 @@ func TestCount(t *testing.T) {
 	a := assert.New(t, false)
 
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	a.Equal(2, Count[int](intSlice, func(e int) bool {
+	a.Equal(2, Count(intSlice, func(e int) bool {
 		return e == 7
 	}))
-	a.Equal(3, Count[int](intSlice, func(e int) bool {
+	a.Equal(3, Count(intSlice, func(e int) bool {
 		return e == 7 || e == 2
 	}))
-	a.Equal(1, Count[int](intSlice, func(e int) bool {
+	a.Equal(1, Count(intSlice, func(e int) bool {
 		return e == 0
 	}))
-	a.Equal(0, Count[int](intSlice, func(e int) bool {
+	a.Equal(0, Count(intSlice, func(e int) bool {
 		return e == -1000
 	}))
 
 	// 空数组
 	intSlice = []int{}
-	a.Equal(0, Count[int](intSlice, func(e int) bool {
+	a.Equal(0, Count(intSlice, func(e int) bool {
 		return e == 7
 	}))
 
 	// 空数组
 
-	a.Equal(2, Count[*obj](objSlice, func(e *obj) bool {
+	a.Equal(2, Count(objSlice, func(e *obj) bool {
 		return e.ID == 1
 	}))
-	a.Equal(1, Count[*obj](objSlice, func(e *obj) bool {
+	a.Equal(1, Count(objSlice, func(e *obj) bool {
 		return e.Name == "4"
 	}))
-	a.Equal(0, Count[*obj](objSlice, func(e *obj) bool {
+	a.Equal(0, Count(objSlice, func(e *obj) bool {
 		return e.Age == 1000
 	}))
 }
@@ -277,34 +277,34 @@ func TestDup(t *testing.T) {
 	a := assert.New(t, false)
 
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7, 7, 5, 7}
-	a.Equal([]int{3, 6, 7, 9}, Dup[int](intSlice, func(i, j int) bool {
+	a.Equal([]int{3, 6, 7, 9}, Dup(intSlice, func(i, j int) bool {
 		return i == j
 	}))
 
 	// 空数组
 	intSlice = []int{}
-	a.Nil(Dup[int](intSlice, func(i, j int) bool {
+	a.Nil(Dup(intSlice, func(i, j int) bool {
 		return i == j
 	}))
 
 	// 空数组
 	intSlice = nil
-	a.Nil(Dup[int](intSlice, func(i, j int) bool {
+	a.Nil(Dup(intSlice, func(i, j int) bool {
 		return i == j
 	}))
 
 	stringSlice := []string{"a", "b", "0", "a"}
-	a.Equal([]int{0, 3}, Dup[string](stringSlice, func(i, j string) bool {
+	a.Equal([]int{0, 3}, Dup(stringSlice, func(i, j string) bool {
 		return i == j
 	}))
 
-	a.Equal([]int{0, 5}, Dup[*obj](objSlice, func(i, j *obj) bool {
+	a.Equal([]int{0, 5}, Dup(objSlice, func(i, j *obj) bool {
 		return i.ID == j.ID
 	}))
-	a.Equal([]int{0, 4}, Dup[*obj](objSlice, func(i, j *obj) bool {
+	a.Equal([]int{0, 4}, Dup(objSlice, func(i, j *obj) bool {
 		return i.Name == j.Name
 	}))
-	a.Nil(Dup[*obj](objSlice, func(i, j *obj) bool {
+	a.Nil(Dup(objSlice, func(i, j *obj) bool {
 		return i.Age == j.Age
 	}))
 }
@@ -315,9 +315,9 @@ func TestContains(t *testing.T) {
 	ints1 := []int{1, 2, 3, 4, 5}
 	ints2 := []int{1, 5, 2}
 	ints3 := []int{1, 9, 7}
-	a.True(Contains[int](ints1, ints2, func(i, j int) bool { return i == j }))
-	a.False(Contains[int](ints2, ints1, func(i, j int) bool { return i == j }))
-	a.False(Contains[int](ints1, ints3, func(i, j int) bool { return i == j }))
+	a.True(Contains(ints1, ints2, func(i, j int) bool { return i == j }))
+	a.False(Contains(ints2, ints1, func(i, j int) bool { return i == j }))
+	a.False(Contains(ints1, ints3, func(i, j int) bool { return i == j }))
 
 	// object
 	objArr := []*obj{
@@ -325,5 +325,5 @@ func TestContains(t *testing.T) {
 		{ID: 3, Name: "3", Age: 3},
 		{ID: 5, Name: "5", Age: 5},
 	}
-	a.True(Contains[*obj](objSlice, objArr, func(i, j *obj) bool { return i.ID == j.ID }))
+	a.True(Contains(objSlice, objArr, func(i, j *obj) bool { return i.ID == j.ID }))
 }
