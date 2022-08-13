@@ -159,3 +159,29 @@ LOOP:
 	}
 	return true
 }
+
+// Min 查找最小值
+//
+// less 用于判断 i 是否小于 j
+func Min[T any](slices []T, less func(i, j T) bool) T {
+	min := slices[0]
+	for i := 1; i < len(slices); i++ {
+		if !less(min, slices[i]) {
+			min = slices[i]
+		}
+	}
+	return min
+}
+
+// Max 查找最大值
+//
+// less 用于判断 i 是否小于 j
+func Max[T any](slices []T, less func(i, j T) bool) T {
+	max := slices[0]
+	for i := 1; i < len(slices); i++ {
+		if less(max, slices[i]) {
+			max = slices[i]
+		}
+	}
+	return max
+}

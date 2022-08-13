@@ -327,3 +327,19 @@ func TestContains(t *testing.T) {
 	}
 	a.True(Contains(objSlice, objArr, func(i, j *obj) bool { return i.ID == j.ID }))
 }
+
+func TestMinMax(t *testing.T) {
+	a := assert.New(t, false)
+
+	ints1 := []int{1, 2, 3, 4, 5}
+	a.Equal(Min(ints1, func(i, j int) bool { return i < j }), 1)
+	a.Equal(Max(ints1, func(i, j int) bool { return i < j }), 5)
+
+	ints1 = []int{1, 2, 0, 0, 7, 4, 5}
+	a.Equal(Min(ints1, func(i, j int) bool { return i < j }), 0)
+	a.Equal(Max(ints1, func(i, j int) bool { return i < j }), 7)
+
+	ints1 = []int{1, 2, -9, 0, 7, 4, 5}
+	a.Equal(Min(ints1, func(i, j int) bool { return i < j }), -9)
+	a.Equal(Max(ints1, func(i, j int) bool { return i < j }), 7)
+}
