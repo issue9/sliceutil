@@ -137,7 +137,9 @@ func Dup[T any](slice []T, eq func(i, j T) bool) (indexes []int) {
 // container 与 sub 都必须是数组或是切片类型。
 // 如果只是需要判断某一个值是否在 container 中，可以使用 Count() 函数。
 // eq 用于判断两个数组或是切的某个元素是否相等，其原型为：
-//  func(i, j int) bool
+//
+//	func(i, j int) bool
+//
 // i 表示 sub 的第 i 个元素，j 表示 container 的第 j 个元素，两者顺序不能乱。
 func Contains[T any](container, sub []T, eq func(i, j T) bool) bool {
 	cl := len(container)

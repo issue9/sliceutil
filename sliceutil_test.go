@@ -5,7 +5,7 @@ package sliceutil
 import (
 	"testing"
 
-	"github.com/issue9/assert/v2"
+	"github.com/issue9/assert/v3"
 )
 
 type obj struct {
