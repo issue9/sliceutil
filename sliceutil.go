@@ -4,7 +4,7 @@
 package sliceutil
 
 // At 从 slice 中查找符合 eq 的元素
-func At[T any](slice []T, eq func(e T) bool) (T, bool) {
+func At[T any](slice []T, eq func(T) bool) (T, bool) {
 	if index := Index(slice, eq); index > -1 {
 		return slice[index], true
 	}
@@ -14,7 +14,7 @@ func At[T any](slice []T, eq func(e T) bool) (T, bool) {
 }
 
 // Index 从 slice 查找符合 eq 的第一个元素并返回其在数组中的元素
-func Index[T any](slice []T, eq func(e T) bool) (index int) {
+func Index[T any](slice []T, eq func(T) bool) (index int) {
 	for i, e := range slice {
 		if eq(e) {
 			return i
@@ -24,7 +24,7 @@ func Index[T any](slice []T, eq func(e T) bool) (index int) {
 }
 
 // Exists 判断 slice 中是否存在符合 eq 的元素存在
-func Exists[T any](slice []T, eq func(e T) bool) bool { return Index(slice, eq) > -1 }
+func Exists[T any](slice []T, eq func(T) bool) bool { return Index(slice, eq) > -1 }
 
 // Reverse 反转数组中的元素
 func Reverse[T any](slice []T) {
@@ -36,7 +36,7 @@ func Reverse[T any](slice []T) {
 // Delete 删除 slice 中符合 eq 条件的元素
 //
 // eq 对比函数，用于确定指定的元素是否可以删除，返回 true 表示可以删除；
-func Delete[T any](slice []T, eq func(e T) bool) []T {
+func Delete[T any](slice []T, eq func(T) bool) []T {
 	l := len(slice)
 	var cnt int
 	last := l - 1
@@ -60,7 +60,7 @@ func Delete[T any](slice []T, eq func(e T) bool) []T {
 // QuickDelete 删除 slice 中符合 eq 条件的元素
 //
 // 功能与 Delete 相同，但是性能相对 Delete 会好一些，同时也不再保证元素顺序与原数组相同。
-func QuickDelete[T any](slice []T, eq func(e T) bool) []T {
+func QuickDelete[T any](slice []T, eq func(T) bool) []T {
 	l := len(slice)
 	var cnt int
 	last := l - 1
@@ -80,9 +80,7 @@ func QuickDelete[T any](slice []T, eq func(e T) bool) []T {
 }
 
 // Count 检测数组中指定值的数量
-//
-// eq 对比函数，e 表示数组的元素；
-func Count[T any](slice []T, eq func(e T) bool) (count int) {
+func Count[T any](slice []T, eq func(T) bool) (count int) {
 	for _, e := range slice {
 		if eq(e) {
 			count++
@@ -184,4 +182,16 @@ func Max[T any](slices []T, less func(i, j T) bool) T {
 		}
 	}
 	return max
+}
+
+// Filter 过滤数据
+func Filter[T any](slices []T, f func(T) bool) []T {
+	i := 0
+	for _, elem := range slices {
+		if f(elem) {
+			slices[i] = elem
+			i++
+		}
+	}
+	return slices[:i]
 }

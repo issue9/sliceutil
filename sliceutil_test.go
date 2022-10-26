@@ -343,3 +343,10 @@ func TestMinMax(t *testing.T) {
 	a.Equal(Min(ints1, func(i, j int) bool { return i < j }), -9)
 	a.Equal(Max(ints1, func(i, j int) bool { return i < j }), 7)
 }
+
+func TestFilter(t *testing.T) {
+	a := assert.New(t, false)
+
+	ints1 := []int{1, 2, 3, 4, 5}
+	a.Equal(Filter(ints1, func(e int) bool { return e == 3 || e == 4 }), []int{3, 4})
+}
