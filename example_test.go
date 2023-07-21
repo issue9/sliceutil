@@ -6,7 +6,7 @@ import "fmt"
 
 func ExampleAt() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	v, found := At(intSlice, func(e int) bool {
+	v, found := At(intSlice, func(e, _ int) bool {
 		return e == 7
 	})
 	fmt.Println(found, v)
@@ -16,7 +16,7 @@ func ExampleAt() {
 
 func ExampleIndex() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Index(intSlice, func(e int) bool {
+	fmt.Println(Index(intSlice, func(e, _ int) bool {
 		return e == 7
 	}))
 
@@ -25,7 +25,7 @@ func ExampleIndex() {
 
 func ExampleExists() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Exists(intSlice, func(e int) bool {
+	fmt.Println(Exists(intSlice, func(e, _ int) bool {
 		return e == 7
 	}))
 
@@ -43,7 +43,7 @@ func ExampleDup() {
 
 func ExampleCount() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	fmt.Println(Count(intSlice, func(e int) bool {
+	fmt.Println(Count(intSlice, func(e, _ int) bool {
 		return e == 7
 	}))
 
@@ -52,13 +52,13 @@ func ExampleCount() {
 
 func ExampleDelete() {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	rslt := Delete(intSlice, func(e int) bool {
+	rslt := Delete(intSlice, func(e, _ int) bool {
 		return e == 7
 	})
 	fmt.Println("Delete:", rslt)
 
 	intSlice = []int{1, 2, 3, 7, 0, 4, 7}
-	rslt = QuickDelete(intSlice, func(e int) bool {
+	rslt = QuickDelete(intSlice, func(e, _ int) bool {
 		return e == 7 || e == 2
 	})
 	fmt.Println("QuickDelete:", rslt)
