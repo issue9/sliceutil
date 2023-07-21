@@ -33,12 +33,12 @@ index := Dup(intSlice, func(i, j int) bool {
 })
 
 // 返回 7 的数量
-count := Count(intSlice, func(i int) bool {
+count := Count(intSlice, func(i, index int) bool {
     return intSlice[i] == 7
 })
 
 // 会重新调整切片的内容，将删除后的数据在放最前端，并返回新切片。
-slice := Delete(intSlice, func(i int) bool {
+slice := Delete(intSlice, func(i, index int) bool {
     return intSlice[i] == 7
 })
 
