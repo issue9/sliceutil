@@ -23,6 +23,17 @@ func Index[T any](slice []T, eq func(T) bool) (index int) {
 	return -1
 }
 
+// Indexes 返回所有符合条件的索引
+func Indexes[T any](slice []T, eq func(T) bool) (indexes []int) {
+	indexes = make([]int, 0, 10)
+	for i, e := range slice {
+		if eq(e) {
+			indexes = append(indexes, i)
+		}
+	}
+	return indexes
+}
+
 // Exists 判断 slice 中是否存在符合 eq 的元素存在
 func Exists[T any](slice []T, eq func(T) bool) bool { return Index(slice, eq) > -1 }
 
@@ -185,6 +196,8 @@ func Max[T any](slices []T, less func(i, j T) bool) T {
 }
 
 // Filter 过滤数据
+//
+// NOTE: 这是基于对原有数据 slices 的修改。
 func Filter[T any](slices []T, f func(T) bool) []T {
 	i := 0
 	for _, elem := range slices {
@@ -194,4 +207,15 @@ func Filter[T any](slices []T, f func(T) bool) []T {
 		}
 	}
 	return slices[:i]
+}
+
+// SafeFilter 过滤数据
+func SafeFilter[T any](slices []T, f func(T) bool) []T {
+	items := make([]T, 0, len(slices))
+	for _, elem := range slices {
+		if f(elem) {
+			items = append(items, elem)
+		}
+	}
+	return items
 }

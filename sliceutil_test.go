@@ -55,6 +55,14 @@ func TestExists(t *testing.T) {
 	a.True(Exists(objSlice, func(o *obj) bool { return o.ID == 5 }))
 }
 
+func TestIndexes(t *testing.T) {
+	a := assert.New(t, false)
+
+	intSlice := []int{1, 2, 3, 7, 0, 4, 7} // 奇数个数
+	indexes := Indexes(intSlice, func(v int) bool { return v == 7 })
+	a.Equal(indexes, []int{3, 6})
+}
+
 func TestReverse(t *testing.T) {
 	a := assert.New(t, false)
 
@@ -348,5 +356,16 @@ func TestFilter(t *testing.T) {
 	a := assert.New(t, false)
 
 	ints1 := []int{1, 2, 3, 4, 5}
-	a.Equal(Filter(ints1, func(e int) bool { return e == 3 || e == 4 }), []int{3, 4})
+	ret := Filter(ints1, func(e int) bool { return e == 3 || e == 4 })
+	a.Equal(ret, []int{3, 4}).
+		Equal(ints1[:2], []int{3, 4})
+}
+
+func TestSafeFilter(t *testing.T) {
+	a := assert.New(t, false)
+
+	ints1 := []int{1, 2, 3, 4, 5}
+	ret := SafeFilter(ints1, func(e int) bool { return e == 3 || e == 4 })
+	a.Equal(ret, []int{3, 4}).
+		Equal(ints1[:2], []int{1, 2})
 }
