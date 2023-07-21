@@ -10,6 +10,7 @@ sliceutil 提供了针对数组和切片的功能
 
 - At 查找符合条件的元素；
 - Index 查找符合条件元素在数组中的位置；
+- Indexes 查找所有符合条件元素在数组中的位置；
 - Reverse 反转数组中的元素；
 - Delete 删除符合条件的切片元素；
 - QuickDelete 删除符合条件的切片元素，性能稍高于 Delete；
@@ -20,8 +21,7 @@ sliceutil 提供了针对数组和切片的功能
 - Min 查找最小值；
 - Max 查找最大值；
 - Filter 过滤数据；
-
-**从 0.8.0 开始采用泛型技术，仅支持 go1.18 以上版本。**
+- SafeFilter 过滤数据；
 
 ```go
 intSlice := []int{1, 2, 3, 7, 0, 4, 7}
