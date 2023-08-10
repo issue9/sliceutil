@@ -38,6 +38,8 @@ func Indexes[T any](slice []T, eq func(T, int) bool) (indexes []int) {
 func Exists[T any](slice []T, eq func(T, int) bool) bool { return Index(slice, eq) > -1 }
 
 // Reverse 反转数组中的元素
+//
+// Deprecated: 可以使用标准库的 [slices.Reverse] 代替
 func Reverse[T any](slice []T) {
 	for i, j := 0, len(slice)-1; i < j; i, j = i+1, j-1 {
 		slice[i], slice[j] = slice[j], slice[i]
