@@ -4,7 +4,7 @@
 package sliceutil
 
 // At 从 slice 中查找符合 eq 的元素
-func At[T any](slice []T, eq func(T, int) bool) (T, bool) {
+func At[T any, S ~[]T](slice S, eq func(T, int) bool) (T, bool) {
 	if index := Index(slice, eq); index > -1 {
 		return slice[index], true
 	}
@@ -14,7 +14,7 @@ func At[T any](slice []T, eq func(T, int) bool) (T, bool) {
 }
 
 // Index 从 slice 查找符合 eq 的第一个元素并返回其在数组中的元素
-func Index[T any](slice []T, eq func(T, int) bool) (index int) {
+func Index[T any, S ~[]T](slice S, eq func(T, int) bool) (index int) {
 	for i, e := range slice {
 		if eq(e, i) {
 			return i
@@ -24,7 +24,7 @@ func Index[T any](slice []T, eq func(T, int) bool) (index int) {
 }
 
 // Indexes 返回所有符合条件的索引
-func Indexes[T any](slice []T, eq func(T, int) bool) (indexes []int) {
+func Indexes[T any, S ~[]T](slice S, eq func(T, int) bool) (indexes []int) {
 	indexes = make([]int, 0, 10)
 	for i, e := range slice {
 		if eq(e, i) {
@@ -35,12 +35,12 @@ func Indexes[T any](slice []T, eq func(T, int) bool) (indexes []int) {
 }
 
 // Exists 判断 slice 中是否存在符合 eq 的元素存在
-func Exists[T any](slice []T, eq func(T, int) bool) bool { return Index(slice, eq) > -1 }
+func Exists[T any, S ~[]T](slice S, eq func(T, int) bool) bool { return Index(slice, eq) > -1 }
 
 // Reverse 反转数组中的元素
 //
 // Deprecated: 可以使用标准库的 [slices.Reverse] 代替
-func Reverse[T any](slice []T) {
+func Reverse[T any, S ~[]T](slice S) {
 	for i, j := 0, len(slice)-1; i < j; i, j = i+1, j-1 {
 		slice[i], slice[j] = slice[j], slice[i]
 	}
@@ -49,7 +49,7 @@ func Reverse[T any](slice []T) {
 // Delete 删除 slice 中符合 eq 条件的元素
 //
 // eq 对比函数，用于确定指定的元素是否可以删除，返回 true 表示可以删除；
-func Delete[T any](slice []T, eq func(T, int) bool) []T {
+func Delete[T any, S ~[]T](slice S, eq func(T, int) bool) S {
 	l := len(slice)
 	var cnt int
 	last := l - 1
@@ -73,7 +73,7 @@ func Delete[T any](slice []T, eq func(T, int) bool) []T {
 // QuickDelete 删除 slice 中符合 eq 条件的元素
 //
 // 功能与 Delete 相同，但是性能相对 Delete 会好一些，同时也不再保证元素顺序与原数组相同。
-func QuickDelete[T any](slice []T, eq func(T, int) bool) []T {
+func QuickDelete[T any, S ~[]T](slice S, eq func(T, int) bool) S {
 	l := len(slice)
 	var cnt int
 	last := l - 1
@@ -93,7 +93,7 @@ func QuickDelete[T any](slice []T, eq func(T, int) bool) []T {
 }
 
 // Count 检测数组中指定值的数量
-func Count[T any](slice []T, eq func(T, int) bool) (count int) {
+func Count[T any, S ~[]T](slice S, eq func(T, int) bool) (count int) {
 	for i, e := range slice {
 		if eq(e, i) {
 			count++
@@ -105,7 +105,7 @@ func Count[T any](slice []T, eq func(T, int) bool) (count int) {
 // Unique 提取 slice 中的所有唯一值
 //
 // NOTE: 此操作会改变 slice 元素顺序。
-func Unique[T any](slice []T, eq func(i, j T) bool) []T {
+func Unique[T any, S ~[]T](slice S, eq func(i, j T) bool) S {
 	var cnt int
 	l := len(slice)
 	last := l - 1
@@ -126,7 +126,7 @@ func Unique[T any](slice []T, eq func(i, j T) bool) []T {
 //
 // 在存在相同元素时，会返回该相同元素的下标列表，
 // 当有多组相同元素时，仅返回第一组相同元素的下标。
-func Dup[T any](slice []T, eq func(i, j T) bool) (indexes []int) {
+func Dup[T any, S ~[]T](slice S, eq func(i, j T) bool) (indexes []int) {
 	l := len(slice)
 
 	for i := 0; i < l && len(indexes) == 0; i++ {
@@ -152,7 +152,7 @@ func Dup[T any](slice []T, eq func(i, j T) bool) (indexes []int) {
 //	func(i, j int) bool
 //
 // i 表示 sub 的第 i 个元素，j 表示 container 的第 j 个元素，两者顺序不能乱。
-func Contains[T any](container, sub []T, eq func(i, j T) bool) bool {
+func Contains[T any, S ~[]T](container, sub S, eq func(i, j T) bool) bool {
 	cl := len(container)
 	sl := len(sub)
 	if sl > cl {
@@ -174,7 +174,7 @@ LOOP:
 // Min 查找最小值
 //
 // less 用于判断 i 是否小于 j
-func Min[T any](slices []T, less func(i, j T) bool) T {
+func Min[T any, S ~[]T](slices S, less func(i, j T) bool) T {
 	min := slices[0]
 	for i := 1; i < len(slices); i++ {
 		if !less(min, slices[i]) {
@@ -187,7 +187,7 @@ func Min[T any](slices []T, less func(i, j T) bool) T {
 // Max 查找最大值
 //
 // less 用于判断 i 是否小于 j
-func Max[T any](slices []T, less func(i, j T) bool) T {
+func Max[T any, S ~[]T](slices S, less func(i, j T) bool) T {
 	max := slices[0]
 	for i := 1; i < len(slices); i++ {
 		if less(max, slices[i]) {
@@ -200,7 +200,7 @@ func Max[T any](slices []T, less func(i, j T) bool) T {
 // Filter 过滤数据
 //
 // NOTE: 这是基于对原有数据 slices 的修改。
-func Filter[T any](slices []T, f func(T, int) bool) []T {
+func Filter[T any, S ~[]T](slices S, f func(T, int) bool) []T {
 	i := 0
 	for index, elem := range slices {
 		if f(elem, index) {
@@ -212,7 +212,7 @@ func Filter[T any](slices []T, f func(T, int) bool) []T {
 }
 
 // SafeFilter 过滤数据
-func SafeFilter[T any](slices []T, f func(T, int) bool) []T {
+func SafeFilter[T any, S ~[]T](slices S, f func(T, int) bool) []T {
 	items := make([]T, 0, len(slices))
 	for i, elem := range slices {
 		if f(elem, i) {
@@ -220,4 +220,13 @@ func SafeFilter[T any](slices []T, f func(T, int) bool) []T {
 		}
 	}
 	return items
+}
+
+// AnySlice 将 slices 转换为 []any 类型
+func AnySlice[T any, S ~[]T](slices S) []any {
+	ret := make([]any, 0, len(slices))
+	for _, item := range slices {
+		ret = append(ret, item)
+	}
+	return ret
 }
