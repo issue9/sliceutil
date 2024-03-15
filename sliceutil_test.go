@@ -5,6 +5,7 @@
 package sliceutil
 
 import (
+	"sort"
 	"testing"
 
 	"github.com/issue9/assert/v4"
@@ -370,4 +371,20 @@ func TestSafeFilter(t *testing.T) {
 	ret := SafeFilter(ints1, func(e, _ int) bool { return e == 3 || e == 4 })
 	a.Equal(ret, []int{3, 4}).
 		Equal(ints1[:2], []int{1, 2})
+}
+
+func TestMapKeys(t *testing.T) {
+	a := assert.New(t, false)
+	m := map[string]string{"1": "1", "2": "2", "0": "0"}
+	keys := MapKeys(m)
+	sort.Strings(keys)
+	a.Equal(keys, []string{"0", "1", "2"})
+}
+
+func TestMapVals(t *testing.T) {
+	a := assert.New(t, false)
+	m := map[string]string{"1": "1", "2": "2", "0": "0"}
+	vals := MapVals(m)
+	sort.Strings(vals)
+	a.Equal(vals, []string{"0", "1", "2"})
 }

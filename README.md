@@ -22,6 +22,9 @@ sliceutil 提供了针对数组和切片的功能
 - Max 查找最大值；
 - Filter 过滤数据；
 - SafeFilter 过滤数据；
+- AnySlice 将 slices 转换为 []any 类型；
+- MapKeys 获取一个 map 的所有 key；
+- MapVals 获取一个 map 的所有值；
 
 ```go
 intSlice := []int{1, 2, 3, 7, 0, 4, 7}
