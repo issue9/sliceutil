@@ -6,7 +6,7 @@ jobs:
   test:
     name: Test
     runs-on: ${{ matrix.os }}
-    
+
     strategy:
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
@@ -26,11 +26,12 @@ jobs:
 
       - name: Vet
         run: go vet -v ./...
-        
+
       - name: Test
         run: go test -v -coverprofile='coverage.txt' -covermode=atomic ./...
 
       - name: Upload Coverage report
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           file: ./coverage.txt
+          token: ${{ secrets.CODECOV_TOKEN }}
