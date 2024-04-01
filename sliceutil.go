@@ -234,7 +234,7 @@ func AnySlice[S ~[]T, T any](slices S) []any {
 }
 
 // MapKeys 获取一个 map 的所有 key
-func MapKeys[M map[K]V, K comparable, V any](m M) []K {
+func MapKeys[M ~map[K]V, K comparable, V any](m M) []K {
 	keys := make([]K, 0, len(m))
 	for k := range m {
 		keys = append(keys, k)
@@ -244,7 +244,7 @@ func MapKeys[M map[K]V, K comparable, V any](m M) []K {
 }
 
 // MapVals 获取一个 map 的所有值
-func MapVals[M map[K]V, K comparable, V any](m M) []V {
+func MapVals[M ~map[K]V, K comparable, V any](m M) []V {
 	vals := make([]V, 0, len(m))
 	for _, v := range m {
 		vals = append(vals, v)
