@@ -11,20 +11,15 @@ sliceutil 提供了针对数组和切片的功能
 - At 查找符合条件的元素；
 - Index 查找符合条件元素在数组中的位置；
 - Indexes 查找所有符合条件元素在数组中的位置；
-- Reverse 反转数组中的元素；
 - Delete 删除符合条件的切片元素；
 - QuickDelete 删除符合条件的切片元素，性能稍高于 Delete；
 - Count 统计数组或切片中包含指定什的数量；
 - Unique 提取数组中的唯一元素；
 - Dup 查看数组或切片中是否包含重得的值；
 - Contains 判断一个数组或是切片是否包含了另一个的所有元素；
-- Min 查找最小值；
-- Max 查找最大值；
-- Filter 过滤数据；
-- SafeFilter 过滤数据；
+- Filter/SafeFilter 过滤数据；
+- FilterSeq: 过滤数据，但是返回的是 iter.Seq 对象；
 - AnySlice 将 slices 转换为 []any 类型；
-- MapKeys 获取一个 map 的所有 key；
-- MapVals 获取一个 map 的所有值；
 
 ```go
 intSlice := []int{1, 2, 3, 7, 0, 4, 7}

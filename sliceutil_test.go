@@ -5,7 +5,6 @@
 package sliceutil
 
 import (
-	"sort"
 	"testing"
 
 	"github.com/issue9/assert/v4"
@@ -64,18 +63,6 @@ func TestIndexes(t *testing.T) {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7} // 奇数个数
 	indexes := Indexes(intSlice, func(v int, _ int) bool { return v == 7 })
 	a.Equal(indexes, []int{3, 6})
-}
-
-func TestReverse(t *testing.T) {
-	a := assert.New(t, false)
-
-	intSlice := []int{1, 2, 3, 7, 0, 4, 7} // 奇数个数
-	Reverse(intSlice)
-	a.Equal(intSlice, []int{7, 4, 0, 7, 3, 2, 1})
-
-	byteSlice := []byte{1, 2, 3, 7, 0, 4, 7}
-	Reverse(byteSlice)
-	a.Equal(byteSlice, []int{7, 4, 0, 7, 3, 2, 1})
 }
 
 func TestDelete(t *testing.T) {
@@ -339,22 +326,6 @@ func TestContains(t *testing.T) {
 	a.True(Contains(objSlice, objArr, func(i, j *obj) bool { return i.ID == j.ID }))
 }
 
-func TestMinMax(t *testing.T) {
-	a := assert.New(t, false)
-
-	ints1 := []int{1, 2, 3, 4, 5}
-	a.Equal(Min(ints1, func(i, j int) bool { return i < j }), 1)
-	a.Equal(Max(ints1, func(i, j int) bool { return i < j }), 5)
-
-	ints1 = []int{1, 2, 0, 0, 7, 4, 5}
-	a.Equal(Min(ints1, func(i, j int) bool { return i < j }), 0)
-	a.Equal(Max(ints1, func(i, j int) bool { return i < j }), 7)
-
-	ints1 = []int{1, 2, -9, 0, 7, 4, 5}
-	a.Equal(Min(ints1, func(i, j int) bool { return i < j }), -9)
-	a.Equal(Max(ints1, func(i, j int) bool { return i < j }), 7)
-}
-
 func TestFilter(t *testing.T) {
 	a := assert.New(t, false)
 
@@ -371,20 +342,4 @@ func TestSafeFilter(t *testing.T) {
 	ret := SafeFilter(ints1, func(e, _ int) bool { return e == 3 || e == 4 })
 	a.Equal(ret, []int{3, 4}).
 		Equal(ints1[:2], []int{1, 2})
-}
-
-func TestMapKeys(t *testing.T) {
-	a := assert.New(t, false)
-	m := map[string]string{"1": "1", "2": "2", "0": "0"}
-	keys := MapKeys(m)
-	sort.Strings(keys)
-	a.Equal(keys, []string{"0", "1", "2"})
-}
-
-func TestMapVals(t *testing.T) {
-	a := assert.New(t, false)
-	m := map[string]string{"1": "1", "2": "2", "0": "0"}
-	vals := MapVals(m)
-	sort.Strings(vals)
-	a.Equal(vals, []string{"0", "1", "2"})
 }

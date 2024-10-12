@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-// Package sliceutil 提供对切片的相关功能
+// Package sliceutil 提供与切片的相关功能
 package sliceutil
 
 // At 从 slice 中查找符合 eq 的元素
@@ -43,15 +43,6 @@ func Indexes[S ~[]T, T any](slice S, eq func(T, int) bool) (indexes []int) {
 
 // Exists 判断 slice 中是否存在符合 eq 的元素存在
 func Exists[S ~[]T, T any](slice S, eq func(T, int) bool) bool { return Index(slice, eq) > -1 }
-
-// Reverse 反转数组中的元素
-//
-// Deprecated: 可以使用标准库的 [slices.Reverse] 代替
-func Reverse[S ~[]T, T any](slice S) {
-	for i, j := 0, len(slice)-1; i < j; i, j = i+1, j-1 {
-		slice[i], slice[j] = slice[j], slice[i]
-	}
-}
 
 // Delete 删除 slice 中符合 eq 条件的元素
 //
@@ -182,34 +173,13 @@ LOOP:
 	return true
 }
 
-// Min 查找最小值
-//
-// less 用于判断 i 是否小于 j
-//
-// Deprecated: 可用 [slices.MinFunc] 代替
-func Min[S ~[]T, T any](slices S, less func(i, j T) bool) T {
-	min := slices[0]
-	for i := 1; i < len(slices); i++ {
-		if !less(min, slices[i]) {
-			min = slices[i]
-		}
+// AnySlice 将 slices 转换为 []any 类型
+func AnySlice[S ~[]T, T any](slices S) []any {
+	ret := make([]any, 0, len(slices))
+	for _, item := range slices {
+		ret = append(ret, item)
 	}
-	return min
-}
-
-// Max 查找最大值
-//
-// less 用于判断 i 是否小于 j
-//
-// Deprecated: 可用 [slices.MaxFunc] 代替
-func Max[S ~[]T, T any](slices S, less func(i, j T) bool) T {
-	max := slices[0]
-	for i := 1; i < len(slices); i++ {
-		if less(max, slices[i]) {
-			max = slices[i]
-		}
-	}
-	return max
+	return ret
 }
 
 // Filter 过滤数据
@@ -235,37 +205,4 @@ func SafeFilter[S ~[]T, T any](slices S, f func(T, int) bool) []T {
 		}
 	}
 	return items
-}
-
-// AnySlice 将 slices 转换为 []any 类型
-func AnySlice[S ~[]T, T any](slices S) []any {
-	ret := make([]any, 0, len(slices))
-	for _, item := range slices {
-		ret = append(ret, item)
-	}
-	return ret
-}
-
-// MapKeys 获取一个 map 的所有 key
-//
-// Deprecated: go1.23 之后，可用标准库的 maps.Keys 代替
-func MapKeys[M ~map[K]V, K comparable, V any](m M) []K {
-	keys := make([]K, 0, len(m))
-	for k := range m {
-		keys = append(keys, k)
-	}
-
-	return keys
-}
-
-// MapVals 获取一个 map 的所有值
-//
-// Deprecated: go1.23 之后，可用标准库的 maps.Values 代替
-func MapVals[M ~map[K]V, K comparable, V any](m M) []V {
-	vals := make([]V, 0, len(m))
-	for _, v := range m {
-		vals = append(vals, v)
-	}
-
-	return vals
 }
