@@ -176,6 +176,8 @@ LOOP:
 // Min 查找最小值
 //
 // less 用于判断 i 是否小于 j
+//
+// Deprecated: 可用 [slices.MinFunc] 代替
 func Min[S ~[]T, T any](slices S, less func(i, j T) bool) T {
 	min := slices[0]
 	for i := 1; i < len(slices); i++ {
@@ -189,6 +191,8 @@ func Min[S ~[]T, T any](slices S, less func(i, j T) bool) T {
 // Max 查找最大值
 //
 // less 用于判断 i 是否小于 j
+//
+// Deprecated: 可用 [slices.MaxFunc] 代替
 func Max[S ~[]T, T any](slices S, less func(i, j T) bool) T {
 	max := slices[0]
 	for i := 1; i < len(slices); i++ {
@@ -234,6 +238,8 @@ func AnySlice[S ~[]T, T any](slices S) []any {
 }
 
 // MapKeys 获取一个 map 的所有 key
+//
+// Deprecated: go1.23 之后，可用标准库的 maps.Keys 代替
 func MapKeys[M ~map[K]V, K comparable, V any](m M) []K {
 	keys := make([]K, 0, len(m))
 	for k := range m {
@@ -244,6 +250,8 @@ func MapKeys[M ~map[K]V, K comparable, V any](m M) []K {
 }
 
 // MapVals 获取一个 map 的所有值
+//
+// Deprecated: go1.23 之后，可用标准库的 maps.Values 代替
 func MapVals[M ~map[K]V, K comparable, V any](m M) []V {
 	vals := make([]V, 0, len(m))
 	for _, v := range m {
