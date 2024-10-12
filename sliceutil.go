@@ -16,6 +16,8 @@ func At[S ~[]T, T any](slice S, eq func(T, int) bool) (T, bool) {
 }
 
 // Index 从 slice 查找符合 eq 的第一个元素并返回其在数组中的元素
+//
+// NOTE: 大部分时候可以用标准库的 [slices.IndexFunc] 代替。
 func Index[S ~[]T, T any](slice S, eq func(T, int) bool) (index int) {
 	for i, e := range slice {
 		if eq(e, i) {
@@ -27,6 +29,9 @@ func Index[S ~[]T, T any](slice S, eq func(T, int) bool) (index int) {
 
 // Indexes 返回所有符合条件的索引
 func Indexes[S ~[]T, T any](slice S, eq func(T, int) bool) (indexes []int) {
+	// NOTE: 返回索引值，大概率是要通过这些索引值再次访问 slice 中的对象，
+	// 所以此方法直接返回 [iter.Req] 并不合适。
+
 	indexes = make([]int, 0, 10)
 	for i, e := range slice {
 		if eq(e, i) {
@@ -51,6 +56,8 @@ func Reverse[S ~[]T, T any](slice S) {
 // Delete 删除 slice 中符合 eq 条件的元素
 //
 // eq 对比函数，用于确定指定的元素是否可以删除，返回 true 表示可以删除；
+//
+// NOTE: 大部分时候可以用标准库的 [slices.DeleteFunc] 代替。
 func Delete[S ~[]T, T any](slice S, eq func(T, int) bool) S {
 	l := len(slice)
 	var cnt int
@@ -75,6 +82,8 @@ func Delete[S ~[]T, T any](slice S, eq func(T, int) bool) S {
 // QuickDelete 删除 slice 中符合 eq 条件的元素
 //
 // 功能与 Delete 相同，但是性能相对 Delete 会好一些，同时也不再保证元素顺序与原数组相同。
+//
+// NOTE: 大部分时候可以用标准库的 [slices.DeleteFunc] 代替。
 func QuickDelete[S ~[]T, T any](slice S, eq func(T, int) bool) S {
 	l := len(slice)
 	var cnt int
