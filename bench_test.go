@@ -80,7 +80,7 @@ func BenchmarkFilterSeq(b *testing.B) {
 	b.Run("collect", func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
-			slices.Collect(FilterSeq(slices.Values(intSlice), eq))
+			_ = slices.Collect(FilterSeq(slices.Values(intSlice), eq))
 		}
 	})
 }
