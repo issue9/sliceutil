@@ -29,9 +29,6 @@ func Index[S ~[]T, T any](slice S, eq func(T, int) bool) (index int) {
 
 // Indexes 返回所有符合条件的索引
 func Indexes[S ~[]T, T any](slice S, eq func(T, int) bool) (indexes []int) {
-	// NOTE: 返回索引值，大概率是要通过这些索引值再次访问 slice 中的对象，
-	// 所以此方法直接返回 [iter.Req] 并不合适。
-
 	indexes = make([]int, 0, 10)
 	for i, e := range slice {
 		if eq(e, i) {
@@ -162,8 +159,8 @@ func Contains[S ~[]T, T any](container, sub S, eq func(i, j T) bool) bool {
 	}
 
 LOOP:
-	for i := 0; i < sl; i++ {
-		for j := 0; j < cl; j++ {
+	for i := range sl {
+		for j := range cl {
 			if eq(sub[i], container[j]) {
 				continue LOOP
 			}

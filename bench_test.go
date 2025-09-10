@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func BenchmakIndexes(b *testing.B) {
+func BenchmarkIndexes(b *testing.B) {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7}
 	eq := func(i, _ int) bool {
 		return intSlice[i] == 7
