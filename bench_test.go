@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2020-2024 caixw
+// SPDX-FileCopyrightText: 2020-2026 caixw
 //
 // SPDX-License-Identifier: MIT
 
@@ -15,7 +15,7 @@ func BenchmarkIndexes(b *testing.B) {
 		return intSlice[i] == 7
 	}
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		Indexes(intSlice, eq)
 	}
 }
@@ -48,7 +48,7 @@ func BenchmarkFilter(b *testing.B) {
 		return intSlice[i] == 7
 	}
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		Filter(intSlice, eq)
 	}
 }
@@ -59,7 +59,7 @@ func BenchmarkSafeFilter(b *testing.B) {
 		return intSlice[i] == 7
 	}
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		SafeFilter(intSlice, eq)
 	}
 }
