@@ -8,7 +8,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/issue9/assert/v5"
+	"github.com/issue9/assert/v6"
 )
 
 func TestFilterSeq(t *testing.T) {
