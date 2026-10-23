@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2020-2024 caixw
+// SPDX-FileCopyrightText: 2020-2026 caixw
 //
 // SPDX-License-Identifier: MIT
 
@@ -47,48 +47,14 @@ func Exists[S ~[]T, T any](slice S, eq func(T, int) bool) bool { return Index(sl
 //
 // NOTE: 大部分时候可以用标准库的 [slices.DeleteFunc] 代替。
 func Delete[S ~[]T, T any](slice S, eq func(T, int) bool) S {
-	l := len(slice)
-	var cnt int
-	last := l - 1
-
-	for i := 0; i <= last; i++ {
-		if !eq(slice[i], i) {
-			continue
+	n := 0
+	for i, v := range slice {
+		if !eq(v, i) {
+			slice[n] = v
+			n++
 		}
-
-		for j := i; j < last; j++ {
-			slice[j], slice[j+1] = slice[j+1], slice[j]
-		}
-		cnt++
-		i--
-		last--
 	}
-
-	return slice[:l-cnt]
-}
-
-// QuickDelete 删除 slice 中符合 eq 条件的元素
-//
-// 功能与 Delete 相同，但是性能相对 Delete 会好一些，同时也不再保证元素顺序与原数组相同。
-//
-// NOTE: 大部分时候可以用标准库的 [slices.DeleteFunc] 代替。
-func QuickDelete[S ~[]T, T any](slice S, eq func(T, int) bool) S {
-	l := len(slice)
-	var cnt int
-	last := l - 1
-
-	for i := 0; i <= last; i++ {
-		if !eq(slice[i], i) {
-			continue
-		}
-
-		slice[i], slice[last] = slice[last], slice[i]
-		cnt++
-		last--
-		i--
-	}
-
-	return slice[:l-cnt]
+	return slice[:n]
 }
 
 // Count 检测数组中指定值的数量
@@ -109,12 +75,14 @@ func Unique[S ~[]T, T any](slice S, eq func(i, j T) bool) S {
 	l := len(slice)
 	last := l - 1
 	for i := 0; i <= last; i++ {
-		for j := i + 1; j <= last; j++ {
+		for j := i + 1; j <= last; {
 			if eq(slice[i], slice[j]) {
 				slice[j], slice[last] = slice[last], slice[j]
 				last--
 				cnt++
+				continue
 			}
+			j++
 		}
 	}
 
@@ -154,9 +122,6 @@ func Dup[S ~[]T, T any](slice S, eq func(i, j T) bool) (indexes []int) {
 func Contains[S ~[]T, T any](container, sub S, eq func(i, j T) bool) bool {
 	cl := len(container)
 	sl := len(sub)
-	if sl > cl {
-		return false
-	}
 
 LOOP:
 	for i := range sl {

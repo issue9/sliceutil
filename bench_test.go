@@ -11,9 +11,7 @@ import (
 
 func BenchmarkIndexes(b *testing.B) {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7}
-	eq := func(i, _ int) bool {
-		return intSlice[i] == 7
-	}
+	eq := func(_, i int) bool { return intSlice[i] == 7 }
 
 	for b.Loop() {
 		Indexes(intSlice, eq)
@@ -21,32 +19,16 @@ func BenchmarkIndexes(b *testing.B) {
 }
 
 func BenchmarkDelete(b *testing.B) {
-	b.Run("delete", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			intSlice := []int{1, 2, 3, 7, 0, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7}
-			eq := func(i, _ int) bool {
-				return intSlice[i] == 7
-			}
-			Delete(intSlice, eq)
-		}
-	})
-
-	b.Run("quickDelete", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			intSlice := []int{1, 2, 3, 7, 0, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7}
-			eq := func(i, _ int) bool {
-				return intSlice[i] == 7
-			}
-			QuickDelete(intSlice, eq)
-		}
-	})
+	for b.Loop() {
+		intSlice := []int{1, 2, 3, 7, 0, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7}
+		eq := func(_, i int) bool { return intSlice[i] == 7 }
+		Delete(intSlice, eq)
+	}
 }
 
 func BenchmarkFilter(b *testing.B) {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7}
-	eq := func(i, _ int) bool {
-		return intSlice[i] == 7
-	}
+	eq := func(i, _ int) bool { return intSlice[i] == 7 }
 
 	for b.Loop() {
 		Filter(intSlice, eq)
@@ -55,9 +37,7 @@ func BenchmarkFilter(b *testing.B) {
 
 func BenchmarkSafeFilter(b *testing.B) {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7}
-	eq := func(i, _ int) bool {
-		return intSlice[i] == 7
-	}
+	eq := func(i, _ int) bool { return intSlice[i] == 7 }
 
 	for b.Loop() {
 		SafeFilter(intSlice, eq)
@@ -66,9 +46,7 @@ func BenchmarkSafeFilter(b *testing.B) {
 
 func BenchmarkFilterSeq(b *testing.B) {
 	intSlice := []int{1, 2, 3, 7, 0, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7}
-	eq := func(i int) bool {
-		return i == 7
-	}
+	eq := func(i int) bool { return i == 7 }
 
 	b.Run("filterSeq", func(b *testing.B) {
 		b.ResetTimer()

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2020-2024 caixw
+// SPDX-FileCopyrightText: 2020-2026 caixw
 //
 // SPDX-License-Identifier: MIT
 
@@ -50,23 +50,6 @@ func ExampleCount() {
 	}))
 
 	// Output: 2
-}
-
-func ExampleDelete() {
-	intSlice := []int{1, 2, 3, 7, 0, 4, 7}
-	rslt := Delete(intSlice, func(e, _ int) bool {
-		return e == 7
-	})
-	fmt.Println("Delete:", rslt)
-
-	intSlice = []int{1, 2, 3, 7, 0, 4, 7}
-	rslt = QuickDelete(intSlice, func(e, _ int) bool {
-		return e == 7 || e == 2
-	})
-	fmt.Println("QuickDelete:", rslt)
-
-	// Output: Delete: [1 2 3 0 4]
-	// QuickDelete: [1 4 3 0]
 }
 
 func ExampleUnique() {

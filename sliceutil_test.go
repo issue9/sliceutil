@@ -73,21 +73,17 @@ func TestDelete(t *testing.T) {
 	// delete
 	intResult := []int{1, 2, 3, 0, 4}
 	intInput := make([]int, len(intSlice))
-	eq := func(e int, _ int) bool {
-		return e == 7
-	}
+	eq := func(e int, _ int) bool { return e == 7 }
 	copy(intInput, intSlice)
 	rslt := Delete(intInput, eq)
 	a.Equal(rslt, intResult)
 
-	// quickDelete
-	intResult = []int{1, 2, 3, 4, 0}
+	intSlice = []int{10, 20, 30, 40}
+	intResult = []int{20, 40}
 	intInput = make([]int, len(intSlice))
-	eq = func(e int, _ int) bool {
-		return e == 7
-	}
+	eq = func(_ int, i int) bool { return i%2 == 0 }
 	copy(intInput, intSlice)
-	rslt = QuickDelete(intInput, eq)
+	rslt = Delete(intInput, eq)
 	a.Equal(rslt, intResult)
 
 	// 未找到元素
@@ -97,21 +93,9 @@ func TestDelete(t *testing.T) {
 	// delete
 	intResult = []int{1, 2, 3, 7, 7, 0, 4}
 	intInput = make([]int, len(intSlice))
-	eq = func(e int, _ int) bool {
-		return e == -1
-	}
+	eq = func(e int, _ int) bool { return e == -1 }
 	copy(intInput, intSlice)
 	rslt = Delete(intInput, eq)
-	a.Equal(rslt, intResult)
-
-	// quickDelete
-	intResult = []int{1, 2, 3, 7, 7, 0, 4}
-	intInput = make([]int, len(intSlice))
-	eq = func(e int, _ int) bool {
-		return e == -1
-	}
-	copy(intInput, intSlice)
-	rslt = QuickDelete(intInput, eq)
 	a.Equal(rslt, intResult)
 
 	// 连续的相同数值
@@ -121,21 +105,9 @@ func TestDelete(t *testing.T) {
 	// delete
 	intResult = []int{1, 2, 3, 0, 4}
 	intInput = make([]int, len(intSlice))
-	eq = func(e, _ int) bool {
-		return e == 7
-	}
+	eq = func(e, _ int) bool { return e == 7 }
 	copy(intInput, intSlice)
 	rslt = Delete(intInput, eq)
-	a.Equal(rslt, intResult)
-
-	// quickDelete
-	intResult = []int{1, 2, 3, 4, 0}
-	intInput = make([]int, len(intSlice))
-	eq = func(e int, _ int) bool {
-		return e == 7
-	}
-	copy(intInput, intSlice)
-	rslt = QuickDelete(intInput, eq)
 	a.Equal(rslt, intResult)
 
 	// 删除后为空数组
@@ -147,17 +119,8 @@ func TestDelete(t *testing.T) {
 	intSlice = intSlice[:0]
 
 	// delete
-	eq = func(e int, _ int) bool {
-		return e == 7
-	}
+	eq = func(e int, _ int) bool { return e == 7 }
 	rslt = Delete(intSlice, eq)
-	a.Equal(len(rslt), 0)
-
-	// quickDelete
-	eq = func(e int, _ int) bool {
-		return e == 7
-	}
-	rslt = QuickDelete(intSlice, eq)
 	a.Equal(len(rslt), 0)
 
 	// nil
@@ -165,17 +128,8 @@ func TestDelete(t *testing.T) {
 	intSlice = nil
 
 	// delete
-	eq = func(e int, _ int) bool {
-		return e == 7
-	}
+	eq = func(e int, _ int) bool { return e == 7 }
 	rslt = Delete(intSlice, eq)
-	a.Equal(len(rslt), 0)
-
-	// quickDelete
-	eq = func(e int, _ int) bool {
-		return e == 7
-	}
-	rslt = QuickDelete(intSlice, eq)
 	a.Equal(len(rslt), 0)
 
 	// object slice
@@ -189,27 +143,9 @@ func TestDelete(t *testing.T) {
 		{ID: 1, Name: "1", Age: 6},
 	}
 	objInput := make([]*obj, len(objSlice))
-	eq1 := func(e *obj, _ int) bool {
-		return e.ID == 2
-	}
+	eq1 := func(e *obj, _ int) bool { return e.ID == 2 }
 	copy(objInput, objSlice)
 	rslt2 := Delete(objInput, eq1)
-	a.Equal(rslt2, objResult)
-
-	// quickDelete
-	objResult = []*obj{
-		{ID: 1, Name: "5", Age: 1},
-		{ID: 1, Name: "1", Age: 6},
-		{ID: 3, Name: "3", Age: 3},
-		{ID: 4, Name: "2", Age: 4},
-		{ID: 5, Name: "5", Age: 5},
-	}
-	objInput = make([]*obj, len(objSlice))
-	eq1 = func(e *obj, _ int) bool {
-		return e.ID == 2
-	}
-	copy(objInput, objSlice)
-	rslt2 = QuickDelete(objInput, eq1)
 	a.Equal(rslt2, objResult)
 }
 
@@ -233,6 +169,10 @@ func TestUnique(t *testing.T) {
 	intSlice = nil
 	rslt = Unique(intSlice, func(i, j int) bool { return i == j })
 	a.Empty(rslt)
+
+	intSlice = []int{1, 1, 1, 1}
+	rslt = Unique(intSlice, func(i, j int) bool { return i == j })
+	a.Equal(rslt, []int{1})
 }
 
 func TestCount(t *testing.T) {
@@ -324,6 +264,9 @@ func TestContains(t *testing.T) {
 		{ID: 5, Name: "5", Age: 5},
 	}
 	a.True(Contains(objSlice, objArr, func(i, j *obj) bool { return i.ID == j.ID }))
+
+	a.True(Contains([]int{1, 2}, []int{1, 1}, func(i, j int) bool { return i == j }))
+	a.True(Contains([]int{1}, []int{1, 1}, func(i, j int) bool { return i == j }))
 }
 
 func TestFilter(t *testing.T) {
